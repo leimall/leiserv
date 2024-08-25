@@ -110,3 +110,59 @@ func (p *ProductAPI) GetProductDetail(c *gin.Context) {
 
 }
 func (p *ProductAPI) GetProductSearch(c *gin.Context) {}
+
+// get product main page lastest product list
+func (p *ProductAPI) GetLastestProductList(c *gin.Context) {
+	list, err := productService.GetLastestProductListDB(8)
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+	}
+	response.OkWithDetailed(list, "OK", c)
+}
+
+func (p *ProductAPI) GetProductDetailById(c *gin.Context) {
+	pid := c.Param("id")
+	product, err := productService.GetProductDetailByPidServ(pid)
+	if err != nil {
+		response.FailWithMessage("商品获取失败", c)
+		return
+	}
+
+	imageList, err := productImgService.GetImageListForProduct([]string{product.ProductID})
+	if err != nil {
+		response.FailWithMessage("商品图片获取失败", c)
+		return
+	}
+	product.ImageList = imageList[product.ProductID]
+
+	catagoryList, err := categoryService.GetCatagoryListForProduct([]string{product.ProductID})
+	if err != nil {
+		response.FailWithMessage("商品分类获取失败", c)
+		return
+	}
+	product.Category = catagoryList[product.ProductID]
+
+	tagsList, err := tagsService.GetTagListForProduct([]string{product.ProductID})
+	if err != nil {
+		response.FailWithMessage("商品标签获取失败", c)
+		return
+	}
+	product.Tags = tagsList[product.ProductID]
+
+	skuList, err := skuService.GetSkuListForProduct(pid)
+	if err != nil {
+		response.FailWithMessage("商品SKU获取失败", c)
+		return
+	}
+	product.Sku = skuList
+
+	productDetail, err := productDetailService.GetProductDetailByPidDB(pid)
+	if err != nil {
+		response.FailWithMessage("商品详情获取失败", c)
+		return
+	}
+	product.Detail = productDetail
+
+	response.OkWithDetailed(product, "OK", c)
+}

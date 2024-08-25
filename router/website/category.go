@@ -18,5 +18,8 @@ func (a *CategoryRouter) InitCategoryRouter(Router *gin.RouterGroup) {
 		// categoryRouter.POST("delete", categoryAPI.DeleteCategory)
 		categoryRouter.POST("list", categoryAPI.GetCategory)
 	}
+	{
+		categoryRouter.GET("list", categoryAPI.GetCategoryList)
+	}
 
 }

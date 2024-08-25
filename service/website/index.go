@@ -9,4 +9,7 @@ type ServiceGroup struct {
 	CommonService
 	ProductService
 	ProductImgService
+	TagsService
+	SkuService
+	ProductDetailService
 }

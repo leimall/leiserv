@@ -35,4 +35,11 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 		productRouter.POST("/image/setsortid", productImgAPI.SetSortIdforImage)
 	}
 
+	// get product main page lastest product list
+	{
+		productRouter.GET("lastest", productAPI.GetLastestProductList)
+		productRouter.GET("detail/:id", productAPI.GetProductDetailById)
+
+	}
+
 }
