@@ -1,0 +1,6 @@
+{
+    "apps" : [{
+      "name"        : "leiserv",
+      "script"      : "./leiserv"
+    }]
+}
