@@ -113,12 +113,30 @@ func (p *ProductAPI) GetProductSearch(c *gin.Context) {}
 
 // get product main page lastest product list
 func (p *ProductAPI) GetLastestProductList(c *gin.Context) {
-	list, err := productService.GetLastestProductListDB(8)
+	num := 0
+	lists, err := productService.GetLastestProductListDB(num)
 	if err != nil {
 		response.FailWithMessage("获取产品列表失败", c)
 		return
 	}
-	response.OkWithDetailed(list, "OK", c)
+
+	// 1. get product id list from list
+	pid := make([]string, 0, len(lists.([]website.ProductListItme)))
+	for _, product := range lists.([]website.ProductListItme) {
+		pid = append(pid, product.ProductID)
+	}
+
+	reviewList, err := productReviewService.GetProductReviewByProductIDDB(pid)
+	if err != nil {
+		response.FailWithMessage("获取产品评论失败", c)
+		return
+	}
+
+	for i, product := range lists.([]website.ProductListItme) {
+		lists.([]website.ProductListItme)[i].Review = reviewList[product.ProductID]
+	}
+
+	response.OkWithDetailed(lists, "OK", c)
 }
 
 func (p *ProductAPI) GetProductDetailById(c *gin.Context) {
@@ -163,6 +181,13 @@ func (p *ProductAPI) GetProductDetailById(c *gin.Context) {
 		return
 	}
 	product.Detail = productDetail
+
+	productReview, err := productReviewService.GetProductReviewByIDDB(pid)
+	if err != nil {
+		response.FailWithMessage("商品评价获取失败", c)
+		return
+	}
+	product.Review = productReview
 
 	response.OkWithDetailed(product, "OK", c)
 }

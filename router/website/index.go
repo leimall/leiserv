@@ -7,4 +7,5 @@ type RouterPack struct {
 	CommentRouter
 	CategoryRouter
 	ProductRouter
+	CartRouter
 }

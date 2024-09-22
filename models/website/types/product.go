@@ -22,13 +22,19 @@ func (Produce) TableName() string {
 	return "product"
 }
 
+type ProductListItme struct {
+	Produce
+	Review ProductReviewsItem `gorm:"-"`
+}
+
 type AllProduct struct {
 	Produce
-	Category  []CategoryInfo  `gorm:"-"`
-	ImageList []ProductImg    `gorm:"-"`
-	Tags      []TagInfo       `gorm:"-"`
-	Sku       SkuInfo         `gorm:"-"`
-	Detail    []ProductDetail `gorm:"-"`
+	Category  []CategoryInfo     `gorm:"-"`
+	ImageList []ProductImg       `gorm:"-"`
+	Tags      []TagInfo          `gorm:"-"`
+	Sku       SkuInfo            `gorm:"-"`
+	Detail    []ProductDetail    `gorm:"-"`
+	Review    ProductReviewsItem `gorm:"-"`
 }
 
 func (AllProduct) TableName() string {

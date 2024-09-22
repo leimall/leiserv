@@ -12,4 +12,6 @@ type ServiceGroup struct {
 	TagsService
 	SkuService
 	ProductDetailService
+	ProductReviewService
+	CartService
 }

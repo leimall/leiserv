@@ -28,4 +28,7 @@ func (s *SetPath) InitSetPath(Router *gin.Engine) {
 	// category api
 	websiteRouter.InitCategoryRouter(PublicPack)
 
+	// cart api
+	websiteRouter.InitCartRouter(PublicPack, PrivatePack)
+
 }
