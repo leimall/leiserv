@@ -5,6 +5,7 @@ import (
 	"leiserv/models/common/response"
 	"leiserv/utils"
 
+	websiteReq "leiserv/models/website/request"
 	website "leiserv/models/website/types"
 
 	"github.com/gin-gonic/gin"
@@ -27,7 +28,7 @@ func (a *CartAPI) AddCart(c *gin.Context) {
 }
 
 func (a *CartAPI) DeleteCart(c *gin.Context) {
-	var req website.CartItem
+	var req websiteReq.UserID
 	if err := c.ShouldBindJSON(&req); err != nil {
 		response.FailWithMessage(fmt.Sprintf("删除失败，%v", err), c)
 		return

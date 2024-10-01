@@ -8,4 +8,6 @@ type RouterPack struct {
 	CategoryRouter
 	ProductRouter
 	CartRouter
+	OrdersRouter
+	DocumentRouter
 }

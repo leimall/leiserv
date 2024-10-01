@@ -14,4 +14,6 @@ type ServiceGroup struct {
 	ProductDetailService
 	ProductReviewService
 	CartService
+	OrdersService
+	DocumentService
 }

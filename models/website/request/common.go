@@ -23,3 +23,11 @@ type PageInfo struct {
 	PageSize int    `json:"pageSize" form:"pageSize"` // 每页大小
 	Keyword  string `json:"keyword" form:"keyword"`   //关键字
 }
+
+type UserID struct {
+	UserId string `json:"user_id" example:"产品ID"`
+}
+
+type DocResponse struct {
+	Title string `json:"title" example:"文档标题"`
+}

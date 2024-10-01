@@ -12,6 +12,8 @@ type APIPack struct {
 	ProductImgAPI
 	ReviewAPI
 	CartAPI
+	OrdersApi
+	DocumentAPI
 }
 
 var (
@@ -27,4 +29,6 @@ var (
 	productDetailService = service.ServiceGroupApp.WebsiteServiceGroup.ProductDetailService
 	productReviewService = service.ServiceGroupApp.WebsiteServiceGroup.ProductReviewService
 	cartService          = service.ServiceGroupApp.WebsiteServiceGroup.CartService
+	ordersService        = service.ServiceGroupApp.WebsiteServiceGroup.OrdersService
+	documentService      = service.ServiceGroupApp.WebsiteServiceGroup.DocumentService
 )
