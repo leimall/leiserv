@@ -13,12 +13,6 @@ func (a *CategoryRouter) InitCategoryRouter(Router *gin.RouterGroup) {
 
 	categoryAPI := v1.ApiGroupApp.WebSiteAPIPack.CategoryAPI
 	{
-		categoryRouter.POST("create", categoryAPI.CreateCategory)
-		// categoryRouter.POST("update", categoryAPI.UpdateCategory)
-		// categoryRouter.POST("delete", categoryAPI.DeleteCategory)
-		categoryRouter.POST("list", categoryAPI.GetCategory)
-	}
-	{
 		categoryRouter.GET("list", categoryAPI.GetCategoryList)
 	}
 

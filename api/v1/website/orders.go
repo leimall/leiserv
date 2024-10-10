@@ -44,7 +44,7 @@ func (p *OrdersApi) CreateOrders(c *gin.Context) {
 		OrderID:           orders.OrderID,
 		UserID:            orders.UserID,
 		TotalPrice:        orders.TotalPrice,
-		PaymentMethod:     orders.PaymentMethod,
+		PaymentStatus:     orders.PaymentStatus,
 		OrderStatus:       orders.OrderStatus,
 		ShippingMethod:    orders.ShippingMethod,
 		ShippingPrice:     orders.ShippingPrice,

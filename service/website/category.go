@@ -40,3 +40,17 @@ func (s *CategoryService) GetCatagoryListForProduct(pIDs []string) (cateMap map[
 	}
 	return cateMap, err
 }
+
+// get category list by title
+// return product_id lists
+func (s *CategoryService) GetCategoryByTitleDB(title string) (list []website.CategoryInfo, err error) {
+	err = global.MALL_DB.Where("title LIKE ?", "%"+title+"%").Find(&list).Error
+	if err != nil {
+		return nil, err
+	}
+	// cateMap = make(map[string][]website.CategoryInfo)
+	// for _, tag := range list {
+	// 	cateMap[tag.ProductID] = append(cateMap[tag.ProductID], tag)
+	// }
+	return list, err
+}

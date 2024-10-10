@@ -29,5 +29,5 @@ type UserID struct {
 }
 
 type DocResponse struct {
-	Title string `json:"title" example:"文档标题"`
+	Title string `json:"title" form:"title" example:"文档标题"`
 }

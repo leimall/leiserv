@@ -5,6 +5,7 @@ import (
 	"leiserv/models/common/response"
 	webauthReq "leiserv/models/website/request"
 	website "leiserv/models/website/types"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -190,4 +191,41 @@ func (p *ProductAPI) GetProductDetailById(c *gin.Context) {
 	product.Review = productReview
 
 	response.OkWithDetailed(product, "OK", c)
+}
+
+// get product list by category id
+// 1. catgory title get product id from category_info table
+// 2. get product id list from product table
+func (p *ProductAPI) GetProductListByCategory(c *gin.Context) {
+	cid := c.Param("id")
+	ctitle := strings.ReplaceAll(cid, "_", " ")
+	list, err := categoryService.GetCategoryByTitleDB(ctitle)
+	if err != nil {
+		response.FailWithMessage("商品分类获取失败", c)
+		return
+	}
+
+	var productIDs []string
+
+	for _, product := range list {
+		productIDs = append(productIDs, product.ProductID)
+	}
+
+	plist, err := productService.GetProductListByCategoryDB(productIDs, 0)
+	if err != nil {
+		response.FailWithMessage("商品列表获取失败", c)
+		return
+	}
+
+	reviewList, err := productReviewService.GetProductReviewByProductIDDB(productIDs)
+	if err != nil {
+		response.FailWithMessage("获取产品评论失败", c)
+		return
+	}
+
+	for i := range plist {
+		plist[i].Review = reviewList[plist[i].ProductID]
+	}
+
+	response.OkWithDetailed(plist, "OK", c)
 }

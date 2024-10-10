@@ -7,6 +7,7 @@ type OrdersRequest struct {
 	UserID            string                  `json:"userId"`
 	TotalPrice        float64                 `json:"totalPrice"`
 	PaymentMethod     string                  `json:"paymentMethod"`
+	PaymentStatus     string                  `json:"paymentStatus"`
 	OrderStatus       string                  `json:"orderStatus"`
 	ShippingMethod    string                  `json:"shippingMethod"`
 	ShippingPrice     float64                 `json:"shippingPrice"`

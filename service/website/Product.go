@@ -68,3 +68,15 @@ func (p *ProductService) GetProductDetailByPidServ(id string) (product website.A
 	err = global.MALL_DB.Where("product_id =?", id).First(&product).Error
 	return product, err
 }
+
+func (p *ProductService) GetProductListByCategoryDB(pId []string, limit int) (list []website.ProductListItme, err error) {
+	var listObj []website.ProductListItme
+	if limit == 0 {
+		limit = 8
+	}
+	err = global.MALL_DB.Where("product_id in (?)", pId).Order("updated_at desc").Limit(limit).Find(&listObj).Error
+	if err != nil {
+		return nil, err
+	}
+	return listObj, nil
+}
