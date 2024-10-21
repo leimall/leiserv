@@ -25,7 +25,6 @@ func (a *AuthAPI) PostSignup(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	fmt.Println("aaaabbbbbcccddddeeefff:", r)
 	err = utils.WebVerify(r, utils.WebRegisterVerify)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -50,8 +49,6 @@ func (a *AuthAPI) PostLogin(c *gin.Context) {
 	var l webauthReq.Signin
 	err := c.ShouldBindJSON(&l)
 	key := c.ClientIP()
-	fmt.Println("aaaabbbbbcccddddeeefff:", l)
-	fmt.Println("aaaabbbbbcccddddeeefff:", key)
 
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)

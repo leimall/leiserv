@@ -6,8 +6,9 @@ import (
 
 	"leiserv/docs"
 	"leiserv/global"
-	"leiserv/middleware"
 	"leiserv/path"
+
+	middleware "leiserv/middleware"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

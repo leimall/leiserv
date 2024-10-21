@@ -3,7 +3,6 @@ package middleware
 import (
 	"bytes"
 	"io"
-	"strconv"
 	"time"
 
 	"leiserv/plugin/email/utils"
@@ -11,13 +10,12 @@ import (
 
 	"leiserv/global"
 	"leiserv/models/system"
-	"leiserv/service"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
+// var userService = service.ServiceGroupApp.SystemServiceGroup.UserService
 
 func ErrorToEmail() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -26,12 +24,12 @@ func ErrorToEmail() gin.HandlerFunc {
 		if claims.Username != "" {
 			username = claims.Username
 		} else {
-			id, _ := strconv.Atoi(c.Request.Header.Get("x-user-id"))
-			user, err := userService.FindUserById(id)
-			if err != nil {
-				username = "Unknown"
-			}
-			username = user.Username
+			// id, _ := strconv.Atoi(c.Request.Header.Get("x-user-id"))
+			// user, err := userService.FindUserById(id)
+			// if err != nil {
+			// 	username = "Unknown"
+			// }
+			// username = user.Username
 		}
 		body, _ := io.ReadAll(c.Request.Body)
 		// 再重新写回请求体body中，ioutil.ReadAll会清空c.Request.Body中的数据

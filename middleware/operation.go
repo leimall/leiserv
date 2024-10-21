@@ -15,13 +15,12 @@ import (
 
 	"leiserv/global"
 	"leiserv/models/system"
-	"leiserv/service"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
+// var operationRecordService = service.ServiceGroupApp.SystemServiceGroup.OperationRecordService
 
 var respPool sync.Pool
 var bufferSize = 1024
@@ -117,9 +116,9 @@ func OperationRecord() gin.HandlerFunc {
 			}
 		}
 
-		if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
-			global.MALL_LOG.Error("create operation record error:", zap.Error(err))
-		}
+		// if err := operationRecordService.CreateSysOperationRecord(record); err != nil {
+		// 	global.MALL_LOG.Error("create operation record error:", zap.Error(err))
+		// }
 	}
 }
 

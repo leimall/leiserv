@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"leiserv/global"
 	"leiserv/initialize"
-	"leiserv/service/system"
 
 	"go.uber.org/zap"
 )
@@ -24,10 +23,10 @@ func RunWindowsServer() {
 			zap.L().Error(fmt.Sprintf("%+v", err))
 		}
 	}
-	// 从db加载jwt数据
-	if global.MALL_DB != nil {
-		system.LoadAll()
-	}
+	// // 从db加载jwt数据
+	// if global.MALL_DB != nil {
+	// 	system.LoadAll()
+	// }
 
 	Router := initialize.Routers()
 	Router.Static("/form-generator", "./resource/page")

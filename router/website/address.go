@@ -15,8 +15,9 @@ func (a *AddressRouter) InitAddressRouter(RouterPrivate *gin.RouterGroup) {
 	{
 		addressPrivateRouter.GET("/address", addressAPI.GetAddress)
 		addressPrivateRouter.POST("/address", addressAPI.CreateAddress)
-		addressPrivateRouter.PUT("/address", addressAPI.CreateAddress)
-		addressPrivateRouter.DELETE("/address", addressAPI.CreateAddress)
+		addressPrivateRouter.PUT("/address", addressAPI.UpdateAddress)
+		addressPrivateRouter.DELETE("/address", addressAPI.DeleteAddress)
+		addressPrivateRouter.PUT("/default", addressAPI.PutDefaultAddress)
 	}
 
 }

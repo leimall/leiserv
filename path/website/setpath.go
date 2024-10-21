@@ -1,7 +1,7 @@
 package website
 
 import (
-	middleware "leiserv/middleware/website"
+	middleware "leiserv/middleware"
 	"leiserv/router"
 
 	"github.com/gin-gonic/gin"
