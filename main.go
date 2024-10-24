@@ -30,10 +30,16 @@ func main() {
 	initialize.Timer()
 	initialize.DBList()
 	if global.MALL_DB != nil {
-		initialize.RegisterTables() // 初始化表
+		// initialize.RegisterTables() // 初始化表
+
+		// initPayment() // 初始化支付接口
+
+		// initShipping() // 初始化物流接口
+
 		// 程序结束前关闭数据库链接
 		db, _ := global.MALL_DB.DB()
 		defer db.Close()
 	}
+
 	core.RunWindowsServer()
 }

@@ -16,4 +16,5 @@ type ServiceGroup struct {
 	CartService
 	OrdersService
 	DocumentService
+	YanWenService
 }
