@@ -100,3 +100,67 @@ func (a *AddressAPI) PutDefaultAddress(c *gin.Context) {
 	}
 	response.OkWithMessage("OK", c)
 }
+
+// billing address
+func (a *AddressAPI) GetBillingAddress(c *gin.Context) {
+	userId := utils.GetWebUserID(c)
+	adds, err := billingAddressService.GetBillingAddress(userId)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(adds, "OK", c)
+}
+
+func (a *AddressAPI) CreateBillingAddress(c *gin.Context) {
+	var reqadds webReq.BillingAddress
+	if err := c.ShouldBindJSON(&reqadds); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	userId := utils.GetWebUserID(c)
+
+	address := website.BillingAddress{
+		UserId:      userId,
+		FirstName:   reqadds.FirstName,
+		LastName:    reqadds.LastName,
+		Line1:       reqadds.Line1,
+		Line2:       reqadds.Line2,
+		Email:       reqadds.Email,
+		City:        reqadds.City,
+		State:       reqadds.State,
+		PostalCode:  reqadds.PostalCode,
+		PhoneNumber: reqadds.PhoneNumber,
+	}
+
+	err := billingAddressService.CreateBillingAddress(address)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(address, "OK", c)
+}
+
+func (a *AddressAPI) UpdateBillingAddress(c *gin.Context) {
+	var reqadds website.BillingAddress
+	if err := c.ShouldBindJSON(&reqadds); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err := billingAddressService.UpdateBillingAddress(reqadds)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("OK", c)
+}
+
+func (a *AddressAPI) DeleteBillingAddress(c *gin.Context) {
+	userId := utils.GetWebUserID(c)
+	err := billingAddressService.DeleteBillingAddress(userId)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("OK", c)
+}

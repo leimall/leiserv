@@ -64,35 +64,51 @@ func (p *OrdersApi) CreateOrders(c *gin.Context) {
 	response.OkWithMessage("OK", c)
 }
 
-// func (p *OrdersApi) GetOrderDetail(c *gin.Context) {
-// 	var orderid string = c.Param("id")
-// 	order, err := ordersService.GetOrderDetailDB(orderid)
-// 	if err != nil {
-// 		response.FailWithMessage(err.Error(), c)
-// 		return
-// 	}
-// 	response.OkWithDetailed(order, "OK", c)
-// }
+func (p *OrdersApi) UpdateOrder(c *gin.Context) {
+	var orders website.OrdersType
+	if err := c.ShouldBindJSON(&orders); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err := ordersService.UpdateOrdersProductDB(orders)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("OK", c)
+}
 
-// func (p *OrdersApi) UpdateOrder(c *gin.Context) {
-// 	var order webauthReq.OrdersRequest
-// 	if err := c.ShouldBindJSON(&order); err != nil {
-// 		response.FailWithMessage(err.Error(), c)
-// 		return
-// 	}
-// 	err := ordersService.UpdateOrderDB(order)
-// 	if err != nil {
-// 		response.FailWithMessage(err.Error(), c)
-// 		return
-// 	}
-// 	response.OkWithMessage("OK", c)
-// }
-// func (p *OrdersApi) DeleteOrder(c *gin.Context) {
-// 	var orderid string = c.Param("id")
-// 	err := ordersService.DeleteOrderDB(orderid)
-// 	if err != nil {
-// 		response.FailWithMessage(err.Error(), c)
-// 		return
-// 	}
-// 	response.OkWithMessage("OK", c)
-// }
+// get myself orders list
+func (p *OrdersApi) GetMyselfOrders(c *gin.Context) {
+	var pageinfo webauthReq.PageInfo
+	err := c.ShouldBindQuery(&pageinfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	list, total, err := ordersService.GetMyOrdersListDB(pageinfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(response.ListsResult{
+		List:  list,
+		Total: total,
+	}, "OK", c)
+}
+
+// get one order by id
+func (p *OrdersApi) GetOneOrderById(c *gin.Context) {
+	orderid := c.Param("id")
+	order, err := ordersService.GetOneOrderByIDDB(orderid)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	order.Products, err = ordersService.GetOneOrderByIDProductsDB(orderid)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(order, "OK", c)
+}

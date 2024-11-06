@@ -15,6 +15,9 @@ func (e *OrdersRouter) InitOrdersRouter(RouterPrivate *gin.RouterGroup) {
 		ordersRouter.GET("list", baseApi.GetOrdersList)
 		ordersRouter.GET("orderid", baseApi.GetOrdersId)
 		ordersRouter.POST("create", baseApi.CreateOrders)
-		ordersRouter.POST("update", baseApi.GetOrdersList)
+		ordersRouter.POST("update", baseApi.UpdateOrder)
+
+		ordersRouter.GET("myself", baseApi.GetMyselfOrders)
+		ordersRouter.GET("/:id", baseApi.GetOneOrderById)
 	}
 }

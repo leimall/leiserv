@@ -22,13 +22,12 @@ import (
 )
 
 var (
-	MALL_DB     *gorm.DB
-	MALL_DBList map[string]*gorm.DB
-	MALL_REDIS  redis.UniversalClient
-	MALL_MONGO  *qmgo.QmgoClient
-	MALL_CONFIG config.Server
-	MALL_VP     *viper.Viper
-	// MALL_LOG    *oplogging.Logger
+	MALL_DB                  *gorm.DB
+	MALL_DBList              map[string]*gorm.DB
+	MALL_REDIS               redis.UniversalClient
+	MALL_MONGO               *qmgo.QmgoClient
+	MALL_CONFIG              config.Server
+	MALL_VP                  *viper.Viper
 	MALL_LOG                 *zap.Logger
 	MALL_Timer               timer.Timer = timer.NewTimerTask()
 	MALL_Concurrency_Control             = &singleflight.Group{}

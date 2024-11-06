@@ -34,6 +34,7 @@ require (
 	github.com/swaggo/swag v1.16.2
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.42
 	github.com/unrolled/secure v1.13.0
+	github.com/yuchenfw/gocrypt v0.0.0-20201117020417-b36b23ab462e
 	go.mongodb.org/mongo-driver v1.12.1
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.24.0

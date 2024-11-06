@@ -4,20 +4,21 @@ import "leiserv/global"
 
 type OrdersType struct {
 	global.DATE_MODEL
-	UserID            string  `json:"user_id" gorm:"comment:'用户ID'"`
-	OrderID           string  `json:"order_id" gorm:"comment:'订单号'"`
-	TotalPrice        float64 `json:"total_price" gorm:"comment:'订单总价格'"`
-	Discount          float64 `json:"discount" gorm:"comment:'折扣金额'"`
-	PaymentMethod     string  `json:"payment_method" gorm:"comment:'支付方式'"`
-	PaymentStatus     string  `json:"payment_status" gorm:"comment:'支付状态'"`
-	OrderStatus       string  `json:"order_status" gorm:"comment:'订单状态'"`
-	ShippingCompanyID uint64  `json:"shipping_company_id" gorm:"comment:'快递公司ID'"`
-	ShippingMethod    string  `json:"shipping_method" gorm:"comment:'配送方式'"`
-	ShippingPrice     float64 `json:"shipping_price" gorm:"comment:'配送费用'"`
-	ShippingAddressID uint64  `json:"shipping_address_id" gorm:"comment:'配送地址ID'"`
-	TrackingNumber    string  `json:"tracking_number" gorm:"comment:'快递单号'"`
-	Mark              string  `json:"mark" gorm:"comment:'客户备注'"`
-	Note              string  `json:"note" gorm:"comment:'商家内部备注'"`
+	UserID            string          `json:"user_id" gorm:"comment:'用户ID'"`
+	OrderID           string          `json:"order_id" gorm:"comment:'订单号'"`
+	TotalPrice        float64         `json:"total_price" gorm:"comment:'订单总价格'"`
+	Discount          float64         `json:"discount" gorm:"comment:'折扣金额'"`
+	PaymentMethod     string          `json:"payment_method" gorm:"comment:'支付方式'"`
+	PaymentStatus     string          `json:"payment_status" gorm:"comment:'支付状态'"`
+	OrderStatus       string          `json:"order_status" gorm:"comment:'订单状态'"`
+	ShippingCompanyID uint64          `json:"shipping_company_id" gorm:"comment:'快递公司ID'"`
+	ShippingMethod    string          `json:"shipping_method" gorm:"comment:'配送方式'"`
+	ShippingPrice     float64         `json:"shipping_price" gorm:"comment:'配送费用'"`
+	ShippingAddressID uint64          `json:"shipping_address_id" gorm:"comment:'配送地址ID'"`
+	TrackingNumber    string          `json:"tracking_number" gorm:"comment:'快递单号'"`
+	Mark              string          `json:"mark" gorm:"comment:'客户备注'"`
+	Note              string          `json:"note" gorm:"comment:'商家内部备注'"`
+	Products          []OrdersProduct `gorm:"-"`
 }
 
 func (OrdersType) TableName() string {

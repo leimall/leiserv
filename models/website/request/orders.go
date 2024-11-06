@@ -14,3 +14,7 @@ type OrdersRequest struct {
 	ShippingAddressID uint64                  `json:"shippingAddressId"`
 	Products          []website.OrdersProduct `json:"products"`
 }
+
+type OrdersRequestType struct {
+	website.OrdersType
+}

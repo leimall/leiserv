@@ -37,4 +37,7 @@ func (s *SetPath) InitSetPath(Router *gin.Engine) {
 	// document api
 	websiteRouter.InitDocumentRouter(PublicPack)
 
+	// lianlian pay api
+	websiteRouter.InitLianLiangPayRouter(PublicPack)
+
 }

@@ -33,4 +33,6 @@ type Server struct {
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
 	// uuid config
 	NanoID NanoID `mapstructure:"nanoid" json:"nanoid" yaml:"nanoid"`
+	//lianlian pay
+	LiangLiangPay LiangLiangPay `mapstructure:"lianlian-pay" json:"lianlian-pay" yaml:"lianlian-pay"`
 }

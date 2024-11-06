@@ -2,6 +2,7 @@ package website
 
 type ServiceGroup struct {
 	AddressService
+	BillingAddressService
 	JWTWebService
 	UserService
 	CasbinService
@@ -17,4 +18,5 @@ type ServiceGroup struct {
 	OrdersService
 	DocumentService
 	YanWenService
+	LLPayService
 }

@@ -10,4 +10,5 @@ type RouterPack struct {
 	CartRouter
 	OrdersRouter
 	DocumentRouter
+	LiangLiangPayRouter
 }

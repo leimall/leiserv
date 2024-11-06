@@ -5,6 +5,7 @@ import (
 
 	"leiserv/global"
 	"leiserv/plugin/email"
+	"leiserv/plugin/lianlianpay"
 	"leiserv/utils/plugin"
 
 	"github.com/gin-gonic/gin"
@@ -30,5 +31,11 @@ func InstallPlugin(PrivateGroup *gin.RouterGroup, PublicRouter *gin.RouterGroup,
 		global.MALL_CONFIG.Email.Nickname,
 		global.MALL_CONFIG.Email.Port,
 		global.MALL_CONFIG.Email.IsSSL,
+	))
+
+	PluginInit(PrivateGroup, lianlianpay.CreateLLPayPlug(
+		global.MALL_CONFIG.LiangLiangPay.LLPubKey,
+		global.MALL_CONFIG.LiangLiangPay.PrivateKey,
+		global.MALL_CONFIG.LiangLiangPay.MerchantID,
 	))
 }
