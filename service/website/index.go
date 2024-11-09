@@ -19,4 +19,5 @@ type ServiceGroup struct {
 	DocumentService
 	YanWenService
 	LLPayService
+	PaymentLLPayService
 }

@@ -48,3 +48,9 @@ func (st *AddressService) SetDefaultAddress(userId string, addressId int64) (err
 	err = global.MALL_DB.Model(&website.ClientAddress{}).Where("id=?", addressId).Update("is_default", 1).Error
 	return err
 }
+
+// get address by id
+func (st *AddressService) GetAddressById(userId string, addressId uint64) (address website.ClientAddress, err error) {
+	err = global.MALL_DB.Where("user_id=? AND id=?", userId, addressId).First(&address).Error
+	return address, err
+}

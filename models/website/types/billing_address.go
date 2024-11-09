@@ -23,6 +23,7 @@ type BillingAddress struct {
 	Cvv          uint   `json:"cvv" gorm:"comment:卡安全码"`
 	PhoneNumber  string `json:"phoneNumber" gorm:"comment:手机号，格式“+区号-手机号”"`
 	Email        string `json:"email" gorm:"comment:邮箱地址"`
+	LlpayToken   string `json:"llpayToken" gorm:"comment:连连支付token"`
 }
 
 func (BillingAddress) TableName() string {

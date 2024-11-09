@@ -104,7 +104,7 @@ func (a *AddressAPI) PutDefaultAddress(c *gin.Context) {
 // billing address
 func (a *AddressAPI) GetBillingAddress(c *gin.Context) {
 	userId := utils.GetWebUserID(c)
-	adds, err := billingAddressService.GetBillingAddress(userId)
+	adds, err := billingAddressService.GetBillingAddressByUserID(userId)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

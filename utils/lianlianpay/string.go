@@ -50,22 +50,25 @@ func structToMap(data interface{}) map[string]interface{} {
 // convertMapToSignatureString - 递归地将 map 转为有序字符串
 func convertMapToSignatureString(data map[string]interface{}) string {
 	var parts []string
-	for key, value := range data {
-		switch v := value.(type) {
+	keys := make([]string, 0, len(data))
+	for k := range data {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		switch v := data[k].(type) {
 		case map[string]interface{}:
 			// 如果是嵌套 map，递归排序并生成字符串
-			parts = append(parts, fmt.Sprintf("%s=%s", key, convertMapToSignatureString(v)))
+			parts = append(parts, convertMapToSignatureString(v))
 		case []interface{}:
 			// 如果是数组类型，处理数组的每个元素
 			arrParts := processArray(v)
-			parts = append(parts, fmt.Sprintf("%s=%s", key, strings.Join(arrParts, "&")))
+			parts = append(parts, strings.Join(arrParts, "&"))
 		default:
 			// 基本类型，直接转为 key=value 格式
-			parts = append(parts, fmt.Sprintf("%s=%v", key, v))
+			parts = append(parts, fmt.Sprintf("%s=%v", k, v))
 		}
 	}
-	// 对外层的 key 进行排序
-	sort.Strings(parts)
 	return strings.Join(parts, "&")
 }
 

@@ -36,4 +36,5 @@ var (
 	documentService       = service.ServiceGroupApp.WebsiteServiceGroup.DocumentService
 	yanwenService         = service.ServiceGroupApp.WebsiteServiceGroup.YanWenService
 	lianlianpayService    = service.ServiceGroupApp.WebsiteServiceGroup.LLPayService
+	PaymentLlPayService   = service.ServiceGroupApp.WebsiteServiceGroup.PaymentLLPayService
 )

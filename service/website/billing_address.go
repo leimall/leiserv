@@ -21,7 +21,7 @@ func (s *BillingAddressService) UpdateBillingAddress(baddress website.BillingAdd
 	return err
 }
 
-func (s *BillingAddressService) GetBillingAddress(user_id string) (website.BillingAddress, error) {
+func (s *BillingAddressService) GetBillingAddressByUserID(user_id string) (website.BillingAddress, error) {
 	var baddress website.BillingAddress
 	err := global.MALL_DB.First(&baddress, user_id).Error
 	if err != nil {

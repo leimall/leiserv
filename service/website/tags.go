@@ -1,8 +1,11 @@
 package website
 
 import (
+	"errors"
 	"leiserv/global"
 	websitetypes "leiserv/models/website/types"
+
+	"gorm.io/gorm"
 )
 
 type TagsService struct{}
@@ -18,6 +21,12 @@ func (t *TagsService) GetTagByIDDB(tagID uint) (tag websitetypes.Tag, err error)
 }
 func (t *TagsService) GetTagByTypeDB(tagID uint) (tag []websitetypes.Tag, err error) {
 	err = global.MALL_DB.Where("type =?", tagID).Find(&tag).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return tag, nil
+		}
+		return tag, err
+	}
 	return tag, err
 }
 
