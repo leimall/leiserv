@@ -24,6 +24,12 @@ type PageInfo struct {
 	Keyword  string `json:"keyword" form:"keyword"`   //关键字
 }
 
+type CommentPage struct {
+	Page      int    `json:"page" form:"page"`
+	PageSize  int    `json:"pageSize" form:"pageSize"`
+	ProductID string `json:"productId" form:"productId"`
+}
+
 type UserID struct {
 	UserId string `json:"user_id" example:"产品ID"`
 }

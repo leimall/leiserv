@@ -9,6 +9,7 @@ type Tag struct {
 	Title    string `json:"title" gorm:"type:VARCHAR(255);not null;comment:'商品标签名称'"`
 	TitleEn  string `json:"title_en" gorm:"type:VARCHAR(255);comment:'商品标签名称EN'"`
 	Value    string `json:"value" gorm:"type:VARCHAR(128);comment:'商品标签值'"`
+	ValueCm  string `json:"value_cm" gorm:"type:VARCHAR(128);comment:'商品标签值EN'"`
 }
 
 func (Tag) TableName() string {
@@ -22,6 +23,11 @@ type TagInfo struct {
 	Title     string `json:"title" gorm:"type:VARCHAR(255);not null;comment:'商品标签名称'"`
 	Value     string `json:"value" gorm:"type:VARCHAR(128);comment:'商品标签值'"`
 	Level     uint   `json:"level" gorm:"type:tinyint UNSIGNED NOT NULL DEFAULT 1;not null;default:1;comment:'商品标签级别, 级别越高, 优先级越高, 1-9'"`
+}
+
+type TagList struct {
+	Tag
+	Children []Tag `gorm:"-"`
 }
 
 func (TagInfo) TableName() string {

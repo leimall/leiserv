@@ -4,8 +4,6 @@ import (
 	"os"
 
 	"leiserv/global"
-	"leiserv/models/example"
-	"leiserv/models/system"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -30,31 +28,7 @@ func Gorm() *gorm.DB {
 
 func RegisterTables() {
 	db := global.MALL_DB
-	err := db.AutoMigrate(
-
-		system.SysApi{},
-		system.SysIgnoreApi{},
-		system.SysUser{},
-		system.SysBaseMenu{},
-		system.JwtBlacklist{},
-		system.SysAuthority{},
-		system.SysDictionary{},
-		system.SysOperationRecord{},
-		system.SysAutoCodeHistory{},
-		system.SysDictionaryDetail{},
-		system.SysBaseMenuParameter{},
-		system.SysBaseMenuBtn{},
-		system.SysAuthorityBtn{},
-		system.SysAutoCode{},
-		system.SysExportTemplate{},
-		system.Condition{},
-		system.JoinTemplate{},
-
-		example.ExaFile{},
-		example.ExaCustomer{},
-		example.ExaFileChunk{},
-		example.ExaFileUploadAndDownload{},
-	)
+	err := db.AutoMigrate()
 	if err != nil {
 		global.MALL_LOG.Error("register table failed", zap.Error(err))
 		os.Exit(0)

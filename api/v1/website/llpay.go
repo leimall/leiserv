@@ -161,49 +161,22 @@ func setMerchantOrder(orderID string, order_desc website.OrdersType, order_produ
 	}
 }
 func setProducts(order_products []website.OrdersProduct) []website.LLPayProduct {
-	return []website.LLPayProduct{
-		{
-			ProductId:        "1",
-			Name:             "Product 1",
-			Description:      "Product 1 description",
-			Price:            100.00,
-			Quantity:         1,
-			Category:         "Electronics",
-			Sku:              "SKU123",
+	var products []website.LLPayProduct
+	for _, product := range order_products {
+		products = append(products, website.LLPayProduct{
+			ProductId:        product.ProductID,
+			Name:             product.ProductID + "-" + product.Size,
+			Description:      product.Title,
+			Price:            product.Price,
+			Quantity:         product.Quantity,
+			Category:         "Press on nails",
+			Sku:              "SN" + product.ProductID + "-" + product.Size,
 			Url:              "https://ftanails.com",
 			ShippingProvider: "YANWEN",
-		}, {
-			ProductId:        "2",
-			Name:             "Product 2",
-			Description:      "Product 2 description",
-			Price:            100.00,
-			Quantity:         1,
-			Category:         "Electronics",
-			Sku:              "SKU123",
-			Url:              "https://ftanails.com",
-			ShippingProvider: "YANWEN",
-		},
+		})
 	}
+	return products
 }
-
-// func setProducts(order_products []website.OrdersProduct) []website.LLPayProduct {
-// 	var products []website.LLPayProduct
-// 	for _, product := range order_products {
-// 		products = append(products, website.LLPayProduct{
-// 			ProductId:        product.ProductID,
-// 			Name:             product.Title,
-// 			Description:      product.Title,
-// 			Price:            product.Price,
-// 			Quantity:         product.Quantity,
-// 			Category:         "Electronics",
-// 			Sku:              "SKU123",
-// 			Url:              "https://ftanails.com",
-// 			ShippingProvider: "YANWEN",
-// 		})
-// 	}
-
-// 	return products
-// }
 
 func setShippping(order_address website.ClientAddress) website.LLPayShipping {
 	return website.LLPayShipping{
@@ -225,12 +198,12 @@ func setCustomer(order_address website.ClientAddress) website.LLPayCustomer {
 
 func setCustomerAddress(order_address website.ClientAddress) website.LLPayBillingAddress {
 	return website.LLPayBillingAddress{
-		Line1:      order_address.Street1,
-		Line2:      "",
+		Line1:      order_address.Line1,
+		Line2:      order_address.Line2,
 		City:       order_address.City,
 		State:      order_address.State,
-		PostalCode: order_address.ZipCode,
-		Country:    "US",
+		PostalCode: order_address.PostalCode,
+		Country:    order_address.Country,
 		District:   "",
 	}
 }

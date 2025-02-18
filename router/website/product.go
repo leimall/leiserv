@@ -13,6 +13,7 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 
 	productAPI := v1.ApiGroupApp.WebSiteAPIPack.ProductAPI
 	productImgAPI := v1.ApiGroupApp.WebSiteAPIPack.ProductImgAPI
+	productCommentAPI := v1.ApiGroupApp.WebSiteAPIPack.ProductCommentAPI
 	{
 		productRouter.GET("list", productAPI.GetProduct)
 		productRouter.GET("detail", productAPI.GetProductDetail)
@@ -39,12 +40,16 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 	{
 		productRouter.GET("lastest", productAPI.GetLastestProductList)
 		productRouter.GET("detail/:id", productAPI.GetProductDetailById)
-
 	}
 
 	// get product category list
 	{
 		productRouter.GET("category/:id", productAPI.GetProductListByCategory)
+	}
+
+	// get product comment list
+	{
+		productRouter.GET("comment", productCommentAPI.GetCommentListByProductID)
 	}
 
 }

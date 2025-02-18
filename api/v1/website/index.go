@@ -10,6 +10,7 @@ type APIPack struct {
 	CommonAPI
 	ProductAPI
 	ProductImgAPI
+	ProductCommentAPI
 	ReviewAPI
 	CartAPI
 	OrdersApi
@@ -31,6 +32,8 @@ var (
 	skuService            = service.ServiceGroupApp.WebsiteServiceGroup.SkuService
 	productDetailService  = service.ServiceGroupApp.WebsiteServiceGroup.ProductDetailService
 	productReviewService  = service.ServiceGroupApp.WebsiteServiceGroup.ProductReviewService
+	productBrandService   = service.ServiceGroupApp.WebsiteServiceGroup.ProductBrandService
+	productCommentService = service.ServiceGroupApp.WebsiteServiceGroup.ProductCommentService
 	cartService           = service.ServiceGroupApp.WebsiteServiceGroup.CartService
 	ordersService         = service.ServiceGroupApp.WebsiteServiceGroup.OrdersService
 	documentService       = service.ServiceGroupApp.WebsiteServiceGroup.DocumentService

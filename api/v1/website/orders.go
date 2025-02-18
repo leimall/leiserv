@@ -80,17 +80,41 @@ func (p *OrdersApi) UpdateOrder(c *gin.Context) {
 
 // get myself orders list
 func (p *OrdersApi) GetMyselfOrders(c *gin.Context) {
+	userId := utils.GetWebUserID(c)
 	var pageinfo webauthReq.PageInfo
 	err := c.ShouldBindQuery(&pageinfo)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	list, total, err := ordersService.GetMyOrdersListDB(pageinfo)
+	list, total, err := ordersService.GetMyOrdersListDB(pageinfo, userId)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	var orderIds []string
+	var addressIds []uint64
+	for _, product := range list {
+		orderIds = append(orderIds, product.OrderID)
+		addressIds = append(addressIds, product.ShippingAddressID)
+	}
+
+	productMap, err := ordersService.GetMyOrdersProductDB(orderIds)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	addressMap, err := addressService.GetMyOrdersAddressDB(addressIds)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	for i, product := range list {
+		list[i].Products = productMap[product.OrderID]
+		list[i].Address = addressMap[uint(product.ShippingAddressID)]
+	}
+
 	response.OkWithDetailed(response.ListsResult{
 		List:  list,
 		Total: total,

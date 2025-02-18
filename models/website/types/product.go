@@ -29,6 +29,7 @@ type ProductListItme struct {
 
 type AllProduct struct {
 	Produce
+	Brand     ProductBrandInfo   `gorm:"-"`
 	Category  []CategoryInfo     `gorm:"-"`
 	ImageList []ProductImg       `gorm:"-"`
 	Tags      []TagInfo          `gorm:"-"`

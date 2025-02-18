@@ -19,6 +19,7 @@ type OrdersType struct {
 	Mark              string          `json:"mark" gorm:"comment:'客户备注'"`
 	Note              string          `json:"note" gorm:"comment:'商家内部备注'"`
 	Products          []OrdersProduct `gorm:"-"`
+	Address           ClientAddress   `gorm:"-"`
 }
 
 func (OrdersType) TableName() string {

@@ -4,7 +4,6 @@ type RouterPack struct {
 	AuthRouter
 	AddressRouter
 	CommonRouter
-	CommentRouter
 	CategoryRouter
 	ProductRouter
 	CartRouter

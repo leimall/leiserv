@@ -14,6 +14,7 @@ func (a *CategoryRouter) InitCategoryRouter(Router *gin.RouterGroup) {
 	categoryAPI := v1.ApiGroupApp.WebSiteAPIPack.CategoryAPI
 	{
 		categoryRouter.GET("list", categoryAPI.GetCategoryList)
+		categoryRouter.GET("style", categoryAPI.GetStyleList)
 	}
 
 }

@@ -56,7 +56,7 @@ func (p *ProductService) GetLastestProductListDB(limit int) (list interface{}, e
 	if limit == 0 {
 		limit = 8
 	}
-	err = global.MALL_DB.Order("updated_at desc").Limit(limit).Find(&listObj).Error
+	err = global.MALL_DB.Where("status = ?", 1).Order("updated_at desc").Limit(limit).Find(&listObj).Error
 	if err != nil {
 		return nil, err
 	}

@@ -54,3 +54,17 @@ func (st *AddressService) GetAddressById(userId string, addressId uint64) (addre
 	err = global.MALL_DB.Where("user_id=? AND id=?", userId, addressId).First(&address).Error
 	return address, err
 }
+
+// get address by id for order
+func (st *AddressService) GetMyOrdersAddressDB(aIDs []uint64) (addressMap map[uint]website.ClientAddress, err error) {
+	var addressList []website.ClientAddress
+	err = global.MALL_DB.Where("id in (?)", aIDs).Find(&addressList).Error
+	if err != nil {
+		return addressMap, err
+	}
+	addressMap = make(map[uint]website.ClientAddress)
+	for _, v := range addressList {
+		addressMap[v.ID] = v
+	}
+	return addressMap, nil
+}

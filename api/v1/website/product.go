@@ -190,6 +190,29 @@ func (p *ProductAPI) GetProductDetailById(c *gin.Context) {
 	}
 	product.Review = productReview
 
+	productBrand, err := productBrandService.GetProductBrandByIDDB(pid)
+	if err != nil {
+		response.FailWithMessage("商品品牌获取失败", c)
+		return
+	}
+	product.Brand.Info = productBrand
+
+	productBrandTags, err := tagsService.GetProductBrandTagsByIDDB(productBrand.ShapeID)
+	if err != nil {
+		response.FailWithMessage("商品品牌标签获取失败", c)
+		return
+	}
+	for i, tag := range productBrandTags {
+		children, err := tagsService.GetProductBrandChildrenTagsByIDDB(tag.ID)
+		if err != nil {
+			response.FailWithMessage("商品品牌Size获取失败", c)
+			return
+		}
+		productBrandTags[i].Children = children
+
+	}
+	product.Brand.Tags = productBrandTags
+
 	response.OkWithDetailed(product, "OK", c)
 }
 

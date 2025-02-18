@@ -62,3 +62,25 @@ func (s *TagsService) GetSKUAllList(typeID uint) (list []websitetypes.Tag, err e
 	err = global.MALL_DB.Where("type =?", typeID).Find(&list).Error
 	return list, err
 }
+
+func (s *TagsService) GetProductBrandTagsByIDDB(pID uint) (tags []websitetypes.TagList, err error) {
+	err = global.MALL_DB.Model(&websitetypes.Tag{}).Where("type = ? and parent_id in (?)", 4, pID).Find(&tags).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return tags, err
+	}
+	if err != nil {
+		return nil, err
+	}
+	return tags, err
+}
+
+func (s *TagsService) GetProductBrandChildrenTagsByIDDB(pID uint) (tags []websitetypes.Tag, err error) {
+	err = global.MALL_DB.Model(&websitetypes.Tag{}).Where("type = ? and parent_id in (?)", 4, pID).Find(&tags).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return tags, err
+	}
+	if err != nil {
+		return nil, err
+	}
+	return tags, err
+}

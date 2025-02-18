@@ -23,6 +23,7 @@ func (s *SetPath) InitSetPath(Router *gin.Engine) {
 
 	// public and common api
 	websiteRouter.InitProductRouter(PublicPack)
+
 	websiteRouter.InitCommonRouter(PublicPack)
 
 	// category api

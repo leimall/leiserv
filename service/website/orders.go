@@ -40,13 +40,11 @@ func (p *OrdersService) UpdateOrdersProductDB(orderDetail website.OrdersType) (e
 }
 
 // get myself order list api
-func (p *OrdersService) GetMyOrdersListDB(pageinfo webauthReq.PageInfo) (list interface{}, total int64, err error) {
-	// offset := (pageinfo.Page - 1) * pageinfo.PageSize
-	// limit := pageinfo.PageSize
-	// db := global.MALL_DB.Model(&website.OrdersType{})
-	// var orders []website.OrdersType
-	// err = db.Where("user_id =?", pageinfo.UserID).Count(&total).Offset(offset).Limit(limit).Find(&orders).Error
-	// list = orders
+func (p *OrdersService) GetMyOrdersListDB(pageinfo webauthReq.PageInfo, user_id string) (list []website.OrdersType, total int64, err error) {
+	offset := (pageinfo.Page - 1) * pageinfo.PageSize
+	limit := pageinfo.PageSize
+	db := global.MALL_DB.Model(&website.OrdersType{})
+	err = db.Where("user_id =?", user_id).Order("updated_at desc").Count(&total).Offset(offset).Limit(limit).Find(&list).Error
 	return list, total, err
 }
 
@@ -67,4 +65,18 @@ func (p *OrdersService) GetOneOrderByIDProductsDB(order_id string) (order []webs
 func (p *OrdersService) CreateOrdersProductDB(orderDetail []website.OrdersProduct) (err error) {
 	err = global.MALL_DB.Create(&orderDetail).Error
 	return err
+}
+
+// get product detail by order_id []
+func (p *OrdersService) GetMyOrdersProductDB(oIDs []string) (productMap map[string][]website.OrdersProduct, err error) {
+	var product []website.OrdersProduct
+	err = global.MALL_DB.Model(&website.OrdersProduct{}).Where("order_id IN (?)", oIDs).Find(&product).Error
+	if err != nil {
+		return nil, err
+	}
+	productMap = make(map[string][]website.OrdersProduct)
+	for _, v := range product {
+		productMap[v.OrderID] = append(productMap[v.OrderID], v)
+	}
+	return productMap, err
 }

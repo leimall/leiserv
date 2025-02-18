@@ -44,6 +44,16 @@ func (st *CategoryAPI) GetCategoryList(c *gin.Context) {
 	response.OkWithDetailed(list, "OK", c)
 }
 
+func (st *CategoryAPI) GetStyleList(c *gin.Context) {
+	list, err := tagsService.GetTagByTypeDB(4)
+	if err != nil {
+		response.FailWithMessage("获取产品分类失败", c)
+		return
+	}
+
+	response.OkWithDetailed(list, "OK", c)
+}
+
 func (st *CategoryAPI) CreateCategory(c *gin.Context) {
 	var req request.CategoryCreate
 	err := c.ShouldBindJSON(&req)

@@ -14,6 +14,8 @@ type ServiceGroup struct {
 	SkuService
 	ProductDetailService
 	ProductReviewService
+	ProductBrandService
+	ProductCommentService
 	CartService
 	OrdersService
 	DocumentService
