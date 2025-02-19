@@ -1,0 +1,233 @@
+aliyun-oss:
+    endpoint: yourEndpoint
+    access-key-id: yourAccessKeyId
+    access-key-secret: yourAccessKeySecret
+    bucket-name: yourBucketName
+    bucket-url: yourBucketUrl
+    base-path: yourBasePath
+autocode:
+    server-model: /model/%s
+    server-router: /router/%s
+    server: /server
+    server-api: /api/v1/%s
+    server-plug: /plugin/%s
+    server-initialize: /initialize
+    root: /Users/richard/workspace/ftanails
+    web-table: /view
+    web: /web/src
+    server-service: /service/%s
+    server-request: /model/%s/request/
+    web-api: /api
+    web-form: /view
+    transfer-restart: true
+    ai-path: ""
+aws-s3:
+    bucket: xxxxx-10005608
+    region: ap-shanghai
+    endpoint: ""
+    secret-id: your-secret-id
+    secret-key: your-secret-key
+    base-url: https://gin.vue.admin
+    path-prefix: leiserv
+    s3-force-path-style: false
+    disable-ssl: false
+captcha:
+    key-long: 6
+    img-width: 240
+    img-height: 80
+    open-captcha: 0
+    open-captcha-timeout: 3600
+cors:
+    mode: strict-whitelist
+    whitelist:
+        - allow-origin: example1.com
+          allow-methods: POST, GET
+          allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id
+          expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+          allow-credentials: true
+        - allow-origin: example2.com
+          allow-methods: GET, POST
+          allow-headers: content-type
+          expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+          allow-credentials: true
+db-list:
+    - type: ""
+      alias-name: ""
+      prefix: ""
+      port: ""
+      config: ""
+      db-name: ""
+      username: ""
+      password: ""
+      path: ""
+      engine: ""
+      log-mode: ""
+      max-idle-conns: 10
+      max-open-conns: 100
+      singular: false
+      log-zap: false
+      disable: true
+disk-list:
+    - mount-point: /
+email:
+    to: xxx@qq.com
+    from: xxx@163.com
+    host: smtp.163.com
+    secret: xxx
+    nickname: test
+    port: 465
+    is-ssl: true
+excel:
+    dir: ./resource/excel/
+hua-wei-obs:
+    path: you-path
+    bucket: you-bucket
+    endpoint: you-endpoint
+    access-key: you-access-key
+    secret-key: you-secret-key
+jwt:
+    signing-key: d8dba218-1068-4283-8eb9-b1ddb43f1aed
+    expires-time: 7d
+    buffer-time: 1d
+    issuer: qmPlus
+local:
+    path: uploads/file
+    store-path: uploads/file
+mongo:
+    coll: ""
+    options: ""
+    database: ""
+    username: ""
+    password: ""
+    auth-source: ""
+    min-pool-size: 0
+    max-pool-size: 100
+    socket-timeout-ms: 0
+    connect-timeout-ms: 0
+    is-zap: false
+    hosts:
+        - host: ""
+          port: ""
+mssql:
+    prefix: ""
+    port: ""
+    config: ""
+    db-name: ""
+    username: ""
+    password: ""
+    path: ""
+    engine: ""
+    log-mode: ""
+    max-idle-conns: 10
+    max-open-conns: 100
+    singular: false
+    log-zap: false
+mysql:
+    prefix: ""
+    port: "3306"
+    config: charset=utf8mb4&parseTime=True&loc=Local
+    db-name: ftanails
+    username: webapi
+    password: ffd!DE983!&Px34dfs3
+    path: 138.3.243.184
+    engine: ""
+    log-mode: error
+    max-idle-conns: 10
+    max-open-conns: 100
+    singular: false
+    log-zap: false
+nanoid:
+    ascii: 0123456789abcdefghijkmnopqrstuvwxyz
+    length: 16
+oracle:
+    prefix: ""
+    port: ""
+    config: ""
+    db-name: ""
+    username: ""
+    password: ""
+    path: ""
+    engine: ""
+    log-mode: ""
+    max-idle-conns: 10
+    max-open-conns: 100
+    singular: false
+    log-zap: false
+pgsql:
+    prefix: ""
+    port: ""
+    config: ""
+    db-name: ""
+    username: ""
+    password: ""
+    path: ""
+    engine: ""
+    log-mode: ""
+    max-idle-conns: 10
+    max-open-conns: 100
+    singular: false
+    log-zap: false
+qiniu:
+    zone: ZoneHuaDong
+    bucket: ""
+    img-path: ""
+    access-key: ""
+    secret-key: ""
+    use-https: false
+    use-cdn-domains: false
+redis:
+    addr: 127.0.0.1:6379
+    password: ""
+    db: 8
+    useCluster: false
+    clusterAddrs:
+        - 172.21.0.3:7000
+        - 172.21.0.4:7001
+        - 172.21.0.2:7002
+sqlite:
+    prefix: ""
+    port: ""
+    config: ""
+    db-name: ""
+    username: ""
+    password: ""
+    path: ""
+    engine: ""
+    log-mode: ""
+    max-idle-conns: 10
+    max-open-conns: 100
+    singular: false
+    log-zap: false
+system:
+    db-type: mysql
+    oss-type: local
+    router-prefix: ""
+    addr: 3009
+    iplimit-count: 15000
+    iplimit-time: 3600
+    use-multipoint: false
+    use-redis: false
+    use-mongo: false
+tencent-cos:
+    bucket: xxxxx-10005608
+    region: ap-shanghai
+    secret-id: your-secret-id
+    secret-key: your-secret-key
+    base-url: https://gin.vue.admin
+    path-prefix: leiserv
+zap:
+    level: info
+    prefix: '[leiserv]'
+    format: console
+    director: log
+    encode-level: LowercaseColorLevelEncoder
+    stacktrace-key: stacktrace
+    show-line: true
+    log-in-console: true
+    retention-day: -1
+lianlian-pay:
+    ll-pub-key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1LUX1mFiLT7XgcAbwC8RxRl8S4o/ihxsTl8d6X1AYJxjeT9kq2I1gmGSJPVdRqQWZZmZ86e4EwZlwOAmuPaXT7ILSbepkSU2IJmv8+Pmx8lG0KybsEgezQ7la+LAllXvKtUp/AA1c3EEZGwjVoWEWvO9PUnyRVYgvJ1seM1AQDtQYvUHfm8a0CNTCYhqNiIivDtnxG4a8H7tcnnwPOipRCffi+S4CnQxXPaWoRbEISjZnt1KpfbkGAFXnbvJPAzDdD3Aou6uBHuMz3tE6ZTqW/v0dBPuxzFEDy3HY46B4bfq6FeDj2BfjFQz1otzgPB58dtWea7u6UY04qsACSe9bQIDAQAB"
+    public-key: ""
+    private-key: "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCwsiGLLECNVl6mocu3rR4geK2woHcBY221pwwi9bjHnVKv7mExPYBOXSB25aTEhJo9YQXN//mLmnsI/PcxI+TQOHLOL4dbQIv3XMA9Yo0SkdplZIbIzgd++VIrY5RaoHl9y2K/FoRgkB1xxJ7U7jAonSgYMoXimiQtapvVzLhwC2HkQgW88j9gZcV/mTGp76dqrsNcp0VqQjOTXJitTiBK4lew9grGvic1PNWDvoAcHeDVonxIHnSS/SwPmO36z9KFpKzfy9BynZLTAVTJ69ofWM+Eu+5Uxa/9c3zB/DuwxcPkYrKkXeoZzi+VWX1WF5yjXxKfiSgW/rXLSkpeUPjpAgMBAAECggEAAOadl2ott5LAx4h0Y463RDrdRtTgmnIVc3tDK3P1gdYGX4V/exrpSiz9HwIPd52F9Eln+EuFbA3o8ewpPffFAT9CbZTuM5vGAug3BjEYD0fNVV5AdipfvSjb/4Lh1R7zk527doYwvVXKwqNaHHOM7Q4VD9+FEXlP9SfRnNLO/2o7RKU5/Cq2GvJ/8acQ5JE5MuA4SzFQ+g3Say5/H2Hg9QPGQGFVsIfdT7SiToIBoyWNt34BzACaiKaFhs4cP5XRosKJHIW0/Fl4KsmlbWN04eYx/5F6By78qxYvdbThrxVSuTXEeVWZ2Zho3eQrqSFXnNLEBoxsE/7jes50kxMHoQKBgQDiaJ/cmKgMSuGP2Y9vcnI3JXSwXSW0d/idaqi0b3dKj8x3Wiw2jBiheM5e/2K+/2qq+n79DaOjv3Ob2AggQrX/CLyPKt0fSZR/HVe8Vuz/xrie4z9NwjPN85CuLfrfCzrteE3VtIdyDai+N4NWovHpymZnoVbTKP762lcZ5Ct7SQKBgQDHyivIHDC1BYmn+uKNiRhKXTt6BUORPMLbBEc+dM/GZJ306EvuMNYatFUrax817t7LtHd1pN0M9+N0MVTPGgZPjHtqwmJIiI4XoYBwrVBvYgw0Qn/nzOJA/RGaqAwsHexKYJiBTN8LAO76L73I/s4rAtJIfVOoyynLErYtfETwoQKBgQCmziZZRC8rP1AHx2Yh2dPERVg/R6Er4OfOMnKw3R6qVF9z33+LgJP1AygoXUfHKC7SYVOF5LKXRcpLG1KBUiT8DNe/MvlOv8skC95D6Fcb6rDCfvJ4u4enSLdjXITkJ0X3BxdxR1wy71VPL18YSVypvnDMENYDJMUW1B4v+Sb/4QKBgDc5P77RY/k1baZb57FdmrQ7bww8Vj/X/rhRR2wRF7lr6GlgqFRPdW7uN7iHpJngy/6chISlLGDASEO+uwV/2Qy19Qs+bbJE5JnNj1YV4ezXui3bz8T/0e5KxUntd2feYYjxiFX9LI27FVNcTOY44D3tSri0w6IdfhDevDJ4bgnhAoGBAMjnLCc7QLjgra3lk5I5hRKjer5dl99SBI9wMY0ictJZPPqLTr2+dyFAGsj7COEjCsI5vp1GLmE5bazMKWK/q1Q6mM0slszModR8D8hPHCSHruwTxH5HniZcESi7BqwAC/XJ1bBgcBLHBYNIz+GN7gNbDvRDUym3JXF89q/bytuT"
+    merchant-id: "202410250002787001"
+    base-url: "https://celer-api.LianLianpay-inc.com/v3/"
