@@ -1,0 +1,13 @@
+.DS_Store
+.idea/
+.vscode/
+newsServ
+go.sum
+vendor/
+bin/
+tmp
+log/
+uploads/file/
+leiserv
+config_prod.yaml
+config.yaml
