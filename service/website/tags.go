@@ -44,19 +44,6 @@ func (t *TagsService) DeleteTagDB(tag websitetypes.Tag) (err error) {
 	return err
 }
 
-func (t *TagsService) GetTagListForProduct(pIDS []string) (tagMap map[string][]websitetypes.TagInfo, err error) {
-	var tags []websitetypes.TagInfo
-	err = global.MALL_DB.Where("product_id in (?)", pIDS).Find(&tags).Error
-	if err != nil {
-		return nil, err
-	}
-	tagMap = make(map[string][]websitetypes.TagInfo)
-	for _, tag := range tags {
-		tagMap[tag.ProductID] = append(tagMap[tag.ProductID], tag)
-	}
-	return tagMap, err
-}
-
 // sku get sku all list
 func (s *TagsService) GetSKUAllList(typeID uint) (list []websitetypes.Tag, err error) {
 	err = global.MALL_DB.Where("type =?", typeID).Find(&list).Error
@@ -83,4 +70,34 @@ func (s *TagsService) GetProductBrandChildrenTagsByIDDB(pID uint) (tags []websit
 		return nil, err
 	}
 	return tags, err
+}
+
+// get product category list
+
+func (t *TagsService) GetTagListForProduct(pIDS []string) (tagMap map[string][]websitetypes.TagInfo, err error) {
+	var tags []websitetypes.TagInfo
+	err = global.MALL_DB.Where("product_id in (?)", pIDS).Find(&tags).Error
+	if err != nil {
+		return nil, err
+	}
+	tagMap = make(map[string][]websitetypes.TagInfo)
+	for _, tag := range tags {
+		tagMap[tag.ProductID] = append(tagMap[tag.ProductID], tag)
+	}
+	return tagMap, err
+}
+
+// get product category list by title name
+func (t *TagsService) GetTagListByTitleDB(limit int, title string) (list []websitetypes.TagInfo, err error) {
+	if limit == 0 {
+		limit = 8
+	}
+	err = global.MALL_DB.Where("title LIKE?", "%"+title+"%").Order("updated_at desc").Limit(limit).Find(&list).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return list, nil
+		}
+		return nil, err
+	}
+	return list, err
 }

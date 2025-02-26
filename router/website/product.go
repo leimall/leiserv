@@ -39,6 +39,8 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 	// get product main page lastest product list
 	{
 		productRouter.GET("lastest", productAPI.GetLastestProductList)
+		productRouter.GET("sale", productAPI.GetSaleProductList)
+		productRouter.GET("bastseller", productAPI.GetBestSellerProductList)
 		productRouter.GET("detail/:id", productAPI.GetProductDetailById)
 	}
 
