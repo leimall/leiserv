@@ -4,7 +4,7 @@ import "leiserv/global"
 
 type SkuInfo struct {
 	SkuItem
-	List []SkuItem `gorm:"-"`
+	List []Tag `gorm:"-"`
 	global.DATE_MODEL
 }
 
