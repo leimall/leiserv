@@ -67,5 +67,4 @@ func GormMysqlByConfig(m config.Mysql) *gorm.DB {
 		sqlDB.Stats().MaxLifetimeClosed,
 		sqlDB.Stats().MaxIdleTimeClosed)
 	return db
-
 }

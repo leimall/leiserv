@@ -74,7 +74,7 @@ func (st *CategoryAPI) CreateCategory(c *gin.Context) {
 	err = categoryService.CreateCategory(website.CategoryInfo{
 		Title:     req.Title,
 		ProductID: req.ProductID,
-		ParentID:  req.ParentId,
+		Value:     req.ParentId,
 		Level:     req.Level,
 	})
 	if err != nil {

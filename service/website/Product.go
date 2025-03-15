@@ -1,11 +1,14 @@
 package website
 
 import (
+	"errors"
 	"leiserv/global"
 	websiteReq "leiserv/models/website/request"
 	website "leiserv/models/website/types"
 	"leiserv/utils"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type ProductService struct{}
@@ -76,7 +79,10 @@ func (p *ProductService) GetProductListByCategoryDB(pId []string, limit int) (li
 	}
 	err = global.MALL_DB.Where("product_id in (?)", pId).Order("updated_at desc").Limit(limit).Find(&listObj).Error
 	if err != nil {
-		return nil, err
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return list, nil
+		}
+		return list, err
 	}
 	return listObj, nil
 }

@@ -39,6 +39,12 @@ func (p *OrdersService) UpdateOrdersProductDB(orderDetail website.OrdersType) (e
 	return err
 }
 
+// update order status by order_id
+func (p *OrdersService) UpdateOrderStatusDB(orderDetail webauthReq.UpdateOrderStatus) (err error) {
+	err = global.MALL_DB.Model(&website.OrdersType{}).Where("order_id =?", orderDetail.OrderID).Update("order_status", orderDetail.OrderStatus).Error
+	return err
+}
+
 // get myself order list api
 func (p *OrdersService) GetMyOrdersListDB(pageinfo webauthReq.PageInfo, user_id string) (list []website.OrdersType, total int64, err error) {
 	offset := (pageinfo.Page - 1) * pageinfo.PageSize

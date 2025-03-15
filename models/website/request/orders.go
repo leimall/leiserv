@@ -18,3 +18,8 @@ type OrdersRequest struct {
 type OrdersRequestType struct {
 	website.OrdersType
 }
+
+type UpdateOrderStatus struct {
+	OrderID     string `json:"orderId"`
+	OrderStatus string `json:"orderStatus"`
+}

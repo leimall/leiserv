@@ -1,9 +1,12 @@
 package website
 
 import (
+	"errors"
 	"fmt"
 	"leiserv/global"
 	website "leiserv/models/website/types"
+
+	"gorm.io/gorm"
 )
 
 type CategoryService struct{}
@@ -46,11 +49,10 @@ func (s *CategoryService) GetCatagoryListForProduct(pIDs []string) (cateMap map[
 func (s *CategoryService) GetCategoryByTitleDB(title string) (list []website.CategoryInfo, err error) {
 	err = global.MALL_DB.Where("title LIKE ?", "%"+title+"%").Find(&list).Error
 	if err != nil {
-		return nil, err
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return list, nil
+		}
+		return list, err
 	}
-	// cateMap = make(map[string][]website.CategoryInfo)
-	// for _, tag := range list {
-	// 	cateMap[tag.ProductID] = append(cateMap[tag.ProductID], tag)
-	// }
 	return list, err
 }

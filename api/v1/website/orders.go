@@ -78,6 +78,21 @@ func (p *OrdersApi) UpdateOrder(c *gin.Context) {
 	response.OkWithMessage("OK", c)
 }
 
+// update status for order by orderid
+func (p *OrdersApi) UpdateOrderStatus(c *gin.Context) {
+	var orders webauthReq.UpdateOrderStatus
+	if err := c.ShouldBindJSON(&orders); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err := ordersService.UpdateOrderStatusDB(orders)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("OK", c)
+}
+
 // get myself orders list
 func (p *OrdersApi) GetMyselfOrders(c *gin.Context) {
 	userId := utils.GetWebUserID(c)

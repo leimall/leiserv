@@ -3,6 +3,7 @@ package website
 import (
 	"leiserv/global"
 	website "leiserv/models/website/types"
+	"time"
 )
 
 type AddressService struct{}
@@ -35,6 +36,15 @@ func (st *AddressService) DeleteAddressOne(userid string, addressId int64) (err 
 	return err
 }
 func (st *AddressService) UpdateAddressOne(address website.ClientAddress) (err error) {
+	if address.CreatedAt.IsZero() {
+		address.CreatedAt = time.Now()
+	}
+	if address.IsDefault == 1 {
+		err := global.MALL_DB.Model(&website.ClientAddress{}).Where("user_id=?", address.UserId).Update("is_default", 0).Error
+		if err != nil {
+			return err
+		}
+	}
 	err = global.MALL_DB.Save(&address).Error
 	return err
 }

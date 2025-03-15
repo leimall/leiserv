@@ -5,6 +5,7 @@ import (
 	"leiserv/models/common/response"
 	webauthReq "leiserv/models/website/request"
 	website "leiserv/models/website/types"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -285,8 +286,23 @@ func (p *ProductAPI) GetProductDetailById(c *gin.Context) {
 // 1. catgory title get product id from category_info table
 // 2. get product id list from product table
 func (p *ProductAPI) GetProductListByCategory(c *gin.Context) {
-	cid := c.Param("id")
-	ctitle := strings.ReplaceAll(cid, "_", " ")
+	categoryID := c.Query("categoryId")
+	offsetStr := c.Query("offset")
+	limitStr := c.Query("limit")
+
+	offset, err := strconv.Atoi(offsetStr)
+	if err != nil {
+		response.FailWithMessage("offset 参数格式错误", c)
+		return
+	}
+
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		response.FailWithMessage("limit 参数格式错误", c)
+		return
+	}
+
+	ctitle := strings.ReplaceAll(categoryID, "_", " ")
 	list, err := categoryService.GetCategoryByTitleDB(ctitle)
 	if err != nil {
 		response.FailWithMessage("商品分类获取失败", c)
@@ -299,21 +315,34 @@ func (p *ProductAPI) GetProductListByCategory(c *gin.Context) {
 		productIDs = append(productIDs, product.ProductID)
 	}
 
-	plist, err := productService.GetProductListByCategoryDB(productIDs, 0)
+	pids := laginatedlimitProdiuctIDS(productIDs, offset, limit)
+
+	plist, err := productService.GetProductListByCategoryDB(pids, limit)
 	if err != nil {
 		response.FailWithMessage("商品列表获取失败", c)
 		return
 	}
 
-	reviewList, err := productReviewService.GetProductReviewByProductIDDB(productIDs)
-	if err != nil {
-		response.FailWithMessage("获取产品评论失败", c)
-		return
-	}
+	total := len(list)
+	// response.OkWithDetailed(plist, "OK", c)
+	response.OkWithDetailed(response.ListsResult{
+		List:  plist,
+		Total: int64(total),
+	}, "OK", c)
+}
 
-	for i := range plist {
-		plist[i].Review = reviewList[plist[i].ProductID]
+func laginatedlimitProdiuctIDS(productIDs []string, offset int, limit int) []string {
+	// 计算切片的起始和结束位置
+	start := offset
+	end := offset + limit
+	if start > len(productIDs) {
+		start = len(productIDs)
 	}
+	if end > len(productIDs) {
+		end = len(productIDs)
+	}
+	// 对 productIDs 进行切片
+	paginatedProductIDs := productIDs[start:end]
 
-	response.OkWithDetailed(plist, "OK", c)
+	return paginatedProductIDs
 }

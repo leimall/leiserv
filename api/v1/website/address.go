@@ -62,6 +62,8 @@ func (a *AddressAPI) UpdateAddress(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+	userId := utils.GetWebUserID(c)
+	reqadds.UserId = userId
 	err := addressService.UpdateAddressOne(reqadds)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -113,25 +115,13 @@ func (a *AddressAPI) GetBillingAddress(c *gin.Context) {
 }
 
 func (a *AddressAPI) CreateBillingAddress(c *gin.Context) {
-	var reqadds webReq.BillingAddress
-	if err := c.ShouldBindJSON(&reqadds); err != nil {
+	var address website.BillingAddress
+	if err := c.ShouldBindJSON(&address); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	userId := utils.GetWebUserID(c)
-
-	address := website.BillingAddress{
-		UserId:      userId,
-		FirstName:   reqadds.FirstName,
-		LastName:    reqadds.LastName,
-		Line1:       reqadds.Line1,
-		Line2:       reqadds.Line2,
-		Email:       reqadds.Email,
-		City:        reqadds.City,
-		State:       reqadds.State,
-		PostalCode:  reqadds.PostalCode,
-		PhoneNumber: reqadds.PhoneNumber,
-	}
+	address.UserId = userId
 
 	err := billingAddressService.CreateBillingAddress(address)
 	if err != nil {
@@ -140,7 +130,6 @@ func (a *AddressAPI) CreateBillingAddress(c *gin.Context) {
 	}
 	response.OkWithDetailed(address, "OK", c)
 }
-
 func (a *AddressAPI) UpdateBillingAddress(c *gin.Context) {
 	var reqadds website.BillingAddress
 	if err := c.ShouldBindJSON(&reqadds); err != nil {

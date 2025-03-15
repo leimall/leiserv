@@ -12,6 +12,7 @@ type BillingAddress struct {
 	Line2        string `json:"line2" gorm:"comment:地址行2"`
 	City         string `json:"city" gorm:"comment:城市"`
 	State        string `json:"state" gorm:"comment:州/省份"`
+	Country      string `json:"countryName" gorm:"comment:国家名称"`
 	PostalCode   string `json:"postalCode" gorm:"comment:邮政编码"`
 	District     string `json:"district" gorm:"comment:行政区"`
 	CardNumber   string `json:"cardNumber" gorm:"comment:卡号"`

@@ -21,7 +21,6 @@ func (a *AddressRouter) InitAddressRouter(RouterPrivate *gin.RouterGroup) {
 
 		addressPrivateRouter.GET("/billingaddress", addressAPI.GetBillingAddress)
 		addressPrivateRouter.POST("/billingaddress", addressAPI.CreateBillingAddress)
-		addressPrivateRouter.PUT("/billingaddress", addressAPI.UpdateBillingAddress)
 		addressPrivateRouter.DELETE("/billingaddress", addressAPI.DeleteBillingAddress)
 	}
 

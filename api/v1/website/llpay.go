@@ -66,7 +66,6 @@ func LLPay(c *gin.Context, orders websiteReq.CreateLianLianPayType, userId strin
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-
 	order_address, err := addressService.GetAddressById(userId, order_desc.ShippingAddressID)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -76,6 +75,18 @@ func LLPay(c *gin.Context, orders websiteReq.CreateLianLianPayType, userId strin
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
+	}
+	if order_billing_address.ID == 0 {
+		order_billing_address = website.BillingAddress{
+			FirstName:  order_address.FirstName,
+			LastName:   order_address.LastName,
+			Line1:      order_address.Line1,
+			Line2:      order_address.Line2,
+			City:       order_address.City,
+			State:      order_address.State,
+			PostalCode: order_address.PostalCode,
+			Country:    order_address.Country,
+		}
 	}
 
 	url := lianlianpay.BaseUrl + fmt.Sprintf("/merchants/%s/payments", lianlianpay.MerchantID)
@@ -140,8 +151,8 @@ func requestLLPay(cardToken string, orderID string, order_desc website.OrdersTyp
 		MerchantTransactionId: orderID,
 		MerchantId:            lianlianpay.MerchantID,
 		SubMerchantId:         lianlianpay.SubMerchantId,
-		NotificationUrl:       "https://baidu.com",
-		RedirectUrl:           "http://localhost:3008/payment",
+		NotificationUrl:       "https://ftanails.com/payment/notify",
+		RedirectUrl:           "https://ftanails.com/payment/success?orderId=" + orderID,
 		Country:               "US",
 		PaymentMethod:         "inter_credit_card",
 		MerchantOrder:         setMerchantOrder(orderID, order_desc, order_products, order_address),
@@ -217,7 +228,7 @@ func setPaymentData(cardToken string, order_billing_address website.BillingAddre
 func setCard(cardToken string, billing_address website.BillingAddress) website.LLPayCard {
 	return website.LLPayCard{
 		CardToken:      cardToken,
-		HolderName:     "John Doe",
+		HolderName:     billing_address.FirstName + " " + billing_address.LastName,
 		BillingAddress: setBillngAddress(billing_address),
 	}
 }
@@ -225,12 +236,12 @@ func setBillngAddress(billing_address website.BillingAddress) website.LLPayBilli
 
 	fmt.Println(billing_address)
 	return website.LLPayBillingAddress{
-		Line1:      "123 Main St",
-		Line2:      "",
-		City:       "New York",
-		State:      "NY",
-		PostalCode: "10001",
-		Country:    "US",
+		Line1:      billing_address.Line1,
+		Line2:      billing_address.Line2,
+		City:       billing_address.City,
+		State:      billing_address.State,
+		PostalCode: billing_address.PostalCode,
+		Country:    billing_address.Country,
 		District:   "",
 	}
 }

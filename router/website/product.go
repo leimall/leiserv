@@ -46,7 +46,7 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 
 	// get product category list
 	{
-		productRouter.GET("category/:id", productAPI.GetProductListByCategory)
+		productRouter.GET("category", productAPI.GetProductListByCategory)
 	}
 
 	// get product comment list
