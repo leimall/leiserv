@@ -41,7 +41,7 @@ func (p *OrdersService) UpdateOrdersProductDB(orderDetail website.OrdersType) (e
 
 // update order status by order_id
 func (p *OrdersService) UpdateOrderStatusDB(orderDetail webauthReq.UpdateOrderStatus) (err error) {
-	err = global.MALL_DB.Model(&website.OrdersType{}).Where("order_id =?", orderDetail.OrderID).Update("order_status", orderDetail.OrderStatus).Error
+	err = global.MALL_DB.Model(&website.OrdersType{}).Where("order_id =?", orderDetail.OrderID).Update("payment_status", orderDetail.OrderStatus).Error
 	return err
 }
 

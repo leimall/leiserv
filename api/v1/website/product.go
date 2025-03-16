@@ -324,7 +324,6 @@ func (p *ProductAPI) GetProductListByCategory(c *gin.Context) {
 	}
 
 	total := len(list)
-	// response.OkWithDetailed(plist, "OK", c)
 	response.OkWithDetailed(response.ListsResult{
 		List:  plist,
 		Total: int64(total),
@@ -341,7 +340,6 @@ func laginatedlimitProdiuctIDS(productIDs []string, offset int, limit int) []str
 	if end > len(productIDs) {
 		end = len(productIDs)
 	}
-	// 对 productIDs 进行切片
 	paginatedProductIDs := productIDs[start:end]
 
 	return paginatedProductIDs

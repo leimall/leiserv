@@ -33,7 +33,7 @@ func (s *SetPath) InitSetPath(Router *gin.Engine) {
 	websiteRouter.InitCartRouter(PublicPack, PrivatePack)
 
 	// order api
-	websiteRouter.InitOrdersRouter(PrivatePack)
+	websiteRouter.InitOrdersRouter(PublicPack, PrivatePack)
 
 	// document api
 	websiteRouter.InitDocumentRouter(PublicPack)

@@ -8,16 +8,21 @@ import (
 
 type OrdersRouter struct{}
 
-func (e *OrdersRouter) InitOrdersRouter(RouterPrivate *gin.RouterGroup) {
+func (e *OrdersRouter) InitOrdersRouter(RouterPublic *gin.RouterGroup, RouterPrivate *gin.RouterGroup) {
 	ordersRouter := RouterPrivate.Group("orders")
+	ordersPublicRouter := RouterPublic.Group("orders")
 	baseApi := v1.ApiGroupApp.WebSiteAPIPack.OrdersApi
 	{
 		ordersRouter.GET("list", baseApi.GetOrdersList)
-		ordersRouter.GET("orderid", baseApi.GetOrdersId)
 		ordersRouter.POST("create", baseApi.CreateOrders)
 		ordersRouter.POST("update", baseApi.UpdateOrder)
 		ordersRouter.POST("status", baseApi.UpdateOrderStatus)
 		ordersRouter.GET("myself", baseApi.GetMyselfOrders)
 		ordersRouter.GET("/:id", baseApi.GetOneOrderById)
+	}
+
+	// public router
+	{
+		ordersPublicRouter.GET("orderid", baseApi.GetOrdersId)
 	}
 }
