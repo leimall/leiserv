@@ -18,3 +18,11 @@ type CreateProductRequest struct {
 	MainImg        string  `json:"mainImg" form:"mainImg" gorm:"column:main_img;"`
 	Stock          uint64  `json:"stock" form:"stock" gorm:"column:stock;"`
 }
+
+type SearchRequest struct {
+	Category []string  `json:"category" form:"category"`
+	Keyword  string    `json:"keyword" form:"keyword"`
+	Pirce    []float64 `json:"price" form:"price"`
+	Page     int       `json:"page" form:"page"`
+	PageSize int       `json:"pageSize" form:"pageSize"`
+}

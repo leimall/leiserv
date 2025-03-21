@@ -28,6 +28,24 @@ func (a *ProductCommentService) GetProductReviewByProductID(pageinfo webauthReq.
 }
 
 func (a *ProductCommentService) PostCommentByOrderID(comment webauthReq.CommentPost) (err error) {
-	err = global.MALL_DB.Create(comment).Error
-	return err
+	existing := webtype.Comment{}
+	newcommnet := webtype.Comment{
+		UserID:    comment.UserID,
+		ProductID: comment.ProductID,
+		OrderID:   comment.OrderID,
+		UserName:  comment.UserName,
+		Content:   comment.Content,
+		IsImg:     comment.IsImg,
+		Star:      comment.Star,
+		Title:     comment.Title,
+	}
+	err = global.MALL_DB.Where("user_id = ? and product_id = ? and order_id = ?", comment.UserID, comment.ProductID, comment.OrderID).First(&existing).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return global.MALL_DB.Create(&newcommnet).Error
+		}
+		return err
+	}
+	newcommnet.ID = existing.ID
+	return global.MALL_DB.Save(&newcommnet).Error
 }

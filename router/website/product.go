@@ -8,23 +8,17 @@ import (
 
 type ProductRouter struct{}
 
-func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
+func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup, Private *gin.RouterGroup) {
 	productRouter := Router.Group("product")
+	privateRouter := Private.Group("product")
 
 	productAPI := v1.ApiGroupApp.WebSiteAPIPack.ProductAPI
 	productImgAPI := v1.ApiGroupApp.WebSiteAPIPack.ProductImgAPI
 	productCommentAPI := v1.ApiGroupApp.WebSiteAPIPack.ProductCommentAPI
 	{
-		productRouter.GET("list", productAPI.GetProduct)
+		productRouter.GET("list", productAPI.GetAllProductList)
 		productRouter.GET("detail", productAPI.GetProductDetail)
 		productRouter.GET("search", productAPI.GetProductSearch)
-	}
-
-	// server api for admin create, update, delete product
-	{
-		productRouter.POST("create", productAPI.CreateProduct)
-		productRouter.POST("update", productAPI.UpdateProduct)
-		productRouter.POST("delete", productAPI.DeleteProduct)
 	}
 
 	// upload image for product
@@ -52,6 +46,7 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup) {
 	// get product comment list
 	{
 		productRouter.GET("comment", productCommentAPI.GetCommentListByProductID)
+		privateRouter.POST("comment", productCommentAPI.PostCommetByOrderID)
 	}
 
 }

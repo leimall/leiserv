@@ -22,7 +22,7 @@ func (s *SetPath) InitSetPath(Router *gin.Engine) {
 	websiteRouter.InitAddressRouter(PrivatePack)
 
 	// public and common api
-	websiteRouter.InitProductRouter(PublicPack)
+	websiteRouter.InitProductRouter(PublicPack, PrivatePack)
 
 	websiteRouter.InitCommonRouter(PublicPack)
 

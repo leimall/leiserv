@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"leiserv/global"
+	webReq "leiserv/models/website/request"
 	website "leiserv/models/website/types"
 
 	"gorm.io/gorm"
@@ -48,6 +49,34 @@ func (s *CategoryService) GetCatagoryListForProduct(pIDs []string) (cateMap map[
 // return product_id lists
 func (s *CategoryService) GetCategoryByTitleDB(title string) (list []website.CategoryInfo, err error) {
 	err = global.MALL_DB.Where("title LIKE ?", "%"+title+"%").Find(&list).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return list, nil
+		}
+		return list, err
+	}
+	return list, err
+}
+
+// search category by title
+func (s *CategoryService) GetProductListBySearchDB(search webReq.SearchRequest) (list []website.CategoryInfo, err error) {
+	query := global.MALL_DB.Model(&website.CategoryInfo{})
+	query = query.Where("deleted_at IS NULL")
+	if len(search.Category) > 0 {
+		conditions := ""
+		values := make([]interface{}, 0, len(search.Category))
+		for i, keyword := range search.Category {
+			if i > 0 {
+				conditions += " OR "
+			}
+			conditions += "title LIKE ?"
+			values = append(values, "%"+keyword+"%")
+		}
+		query = query.Where(conditions, values...)
+
+		println("=====", query)
+	}
+	err = query.Find(&list).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return list, nil

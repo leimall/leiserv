@@ -13,6 +13,15 @@ import (
 
 type ProductAPI struct{}
 
+func (p *ProductAPI) GetAllProductList(c *gin.Context) {
+	list, err := productService.GetAllProductListDB()
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+	}
+	response.OkWithDetailed(list, "OK", c)
+}
+
 func (p *ProductAPI) GetProduct(c *gin.Context) {
 	var pageinfo webauthReq.PageInfo
 	err := c.ShouldBindQuery(&pageinfo)
@@ -111,7 +120,42 @@ func (p *ProductAPI) DeleteProduct(c *gin.Context) {
 func (p *ProductAPI) GetProductDetail(c *gin.Context) {
 
 }
-func (p *ProductAPI) GetProductSearch(c *gin.Context) {}
+func (p *ProductAPI) GetProductSearch(c *gin.Context) {
+	var search webauthReq.SearchRequest
+	err := c.ShouldBindQuery(&search)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	catagoryLists, err := categoryService.GetProductListBySearchDB(search)
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+	}
+	// 1. get product id list from list
+	var pids []string
+
+	for _, product := range catagoryLists {
+		pids = append(pids, product.ProductID)
+	}
+
+	lists, err := productService.GetProductListByCategoryDB(pids, 99999)
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+	}
+	reviewList, err := productReviewService.GetProductReviewByProductIDDB(pids)
+	if err != nil {
+		response.FailWithMessage("获取产品评论失败", c)
+		return
+	}
+	for i, product := range lists {
+		lists[i].Review = reviewList[product.ProductID]
+	}
+
+	response.OkWithDetailed(lists, "OK", c)
+
+}
 
 // get product main page hot product list
 func (p *ProductAPI) GetBestSellerProductList(c *gin.Context) {

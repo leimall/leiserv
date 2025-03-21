@@ -6,6 +6,7 @@ type Comment struct {
 	global.DATE_MODEL
 	ProductID   string `json:"productId" gorm:"index;comment:产品ID"` // 产品ID
 	UserID      string `json:"userId" gorm:"index;comment:用户ID"`    // 用户ID
+	OrderID     string `json:"orderId" gorm:"comment:订单ID"`         // 订单ID
 	UserName    string `json:"userName" gorm:"comment:用户名"`         // 用户名
 	Title       string `json:"title" gorm:"comment:标题"`             // 标题
 	Content     string `json:"content" gorm:"comment:评论内容"`         // 评论内容

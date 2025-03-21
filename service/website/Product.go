@@ -22,6 +22,18 @@ func (p *ProductService) CreateProductOne(product website.Produce) (err error) {
 	return err
 }
 
+// get all product list
+func (p *ProductService) GetAllProductListDB() (list []website.Produce, err error) {
+	err = global.MALL_DB.Find(&list).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return list, nil
+		}
+		return list, err
+	}
+	return list, nil
+}
+
 func (p *ProductService) GetProductList(info websiteReq.PageInfo) (list []website.AllProduct, total int64, err error) {
 	var listObj []website.AllProduct
 	limit := info.PageSize
