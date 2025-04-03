@@ -46,3 +46,23 @@ func (l *LLPayService) CreatePayment(url string, data website.LianLianPay, times
 	}
 	return res, err
 }
+
+func (l *LLPayService) GetLLPayPaymentInquiry(url string, merchant_id string, order_id string) (res []byte, err error) {
+	timestamp := time.Now().Format("20060102150405")
+	data := &models.PaymentInquiryRequest{
+		MerchantID:            merchant_id,
+		MerchantTransactionID: order_id,
+	}
+	signatureString := tools.ConvertStructToSignatureString(data)
+	sign, err := tools.Sign(signatureString)
+	if err != nil {
+		log.Println("Error signing data:", err)
+		return nil, err
+	}
+	body, _ := json.Marshal(data)
+	res, err = tools.GetRequest(url, sign, timestamp, body)
+	if err != nil {
+		return nil, err
+	}
+	return res, err
+}

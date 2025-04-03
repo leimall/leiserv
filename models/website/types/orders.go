@@ -2,6 +2,28 @@ package website
 
 import "leiserv/global"
 
+const (
+	// 支付状态常量
+	PaymentStatusUnpaid   = "unpaid"
+	PaymentStatusPaid     = "paid"
+	PaymentStatusRefunded = "refunded"
+
+	// 订单状态常量
+	OrderStatusPending                    = "pending"
+	OrderStatusProcessing                 = "processing"
+	OrderStatusInProduction               = "in_production"
+	OrderStatusProductionCompleted        = "production_completed"
+	OrderStatusPendingQualityInspection   = "pending_quality_inspection"
+	OrderStatusQualityInspectionCompleted = "quality_inspection_completed"
+	OrderStatusPackaging                  = "packaging"
+	OrderStatusPacked                     = "packed"
+	OrderStatusPendingShipment            = "pending_shipment"
+	OrderStatusShipping                   = "shipping"
+	OrderStatusCompleted                  = "completed"
+	OrderStatusCancelled                  = "cancelled"
+	OrderStatusRefunded                   = "refunded"
+)
+
 type OrdersType struct {
 	global.DATE_MODEL
 	UserID            string          `json:"user_id" gorm:"comment:'用户ID'"`

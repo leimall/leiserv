@@ -49,8 +49,12 @@ func (p *OrdersService) UpdateOrderStatusDB(orderDetail webauthReq.UpdateOrderSt
 func (p *OrdersService) GetMyOrdersListDB(pageinfo webauthReq.PageInfo, user_id string) (list []website.OrdersType, total int64, err error) {
 	offset := (pageinfo.Page - 1) * pageinfo.PageSize
 	limit := pageinfo.PageSize
-	db := global.MALL_DB.Model(&website.OrdersType{})
-	err = db.Where("user_id =?", user_id).Order("updated_at desc").Count(&total).Offset(offset).Limit(limit).Find(&list).Error
+	db := global.MALL_DB.Model(&website.OrdersType{}).Where("user_id =?", user_id)
+	if pageinfo.Keyword != "" {
+		db = db.Where("order_status =?", pageinfo.Keyword)
+	}
+	err = db.Order("updated_at desc").Count(&total).Offset(offset).Limit(limit).Find(&list).Error
+
 	return list, total, err
 }
 

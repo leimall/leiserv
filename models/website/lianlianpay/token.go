@@ -5,6 +5,16 @@ type TokenRequest struct {
 	Timestamp  string `json:"timestamp"`
 }
 
+type PaymentInquiryRequest struct {
+	MerchantID            string `json:"merchant_id"`
+	MerchantTransactionID string `json:"merchant_transaction_id"`
+}
+
+type PaymentInquiryResponse struct {
+	Response
+	Order PaymentOrderOrder `grom:"-"`
+}
+
 type TokenResponse struct {
 	ReturnCode    string `json:"return_code"`
 	ReturnMessage string `json:"return_message"`
@@ -16,23 +26,6 @@ type Response struct {
 	ReturnMessage string `json:"return_message"`
 	TraceId       string `json:"trace_id"`
 }
-
-// "order": {
-//       "ll_transaction_id": "2024110703169182",
-//       "merchant_transaction_id": "667356745156268032",
-//       "payment_data": {
-//          "payment_currency_code": "USD",
-//          "payment_amount": "200.00",
-//          "exchange_rate": "1.00000000",
-//          "payment_status": "WP",
-//          "settlement_currency_code": "USD",
-//          "settlement_amount": "200.00",
-//          "installments": "1"
-//       },
-//       "3ds_status": "CHALLENGE",
-//       "payment_url": "https://gacashier.lianlianpay-inc.com/3ds?tdsKey=583c68e9730344e78614ec5eeb6dd43c",
-//       "key": "1pgtbvn5jku"
-//    }
 
 type PaymentResponseData struct {
 	Response
