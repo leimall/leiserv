@@ -70,6 +70,48 @@ func (p *ProductAPI) GetProduct(c *gin.Context) {
 	}, "OK", c)
 }
 
+// get all list of product
+func (p *ProductAPI) GetAllProductListsForSearch(c *gin.Context) {
+	list, err := productService.GetAllProductListDBForSearch()
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+
+	}
+	var productIDs []string
+	for _, product := range list {
+		productIDs = append(productIDs, product.ProductID)
+	}
+	// get category list
+	catagoryList, err := categoryService.GetCatagoryListForProduct(productIDs)
+	if err != nil {
+		response.FailWithMessage("获取商品列表中的分类失败", c)
+		return
+	}
+
+	// get tags lists
+	tagsList, err := tagsService.GetTagListForProduct(productIDs)
+	if err != nil {
+		response.FailWithMessage("获取商品列表中的标签失败", c)
+		return
+	}
+
+	// get review list
+	reviewList, err := productReviewService.GetProductReviewByProductIDDB(productIDs)
+	if err != nil {
+		response.FailWithMessage("获取产品评论失败", c)
+		return
+	}
+
+	for i, product := range list {
+		list[i].Category = catagoryList[product.ProductID]
+		list[i].Tags = tagsList[product.ProductID]
+		list[i].Review = reviewList[product.ProductID]
+	}
+
+	response.OkWithDetailed(list, "OK", c)
+}
+
 func (p *ProductAPI) CreateProduct(c *gin.Context) {
 	var cp webauthReq.CreateProductRequest
 	if err := c.ShouldBindJSON(&cp); err != nil {

@@ -41,3 +41,10 @@ type AllProduct struct {
 func (AllProduct) TableName() string {
 	return "product"
 }
+
+type ProductSearch struct {
+	Produce
+	Category []CategoryInfo     `gorm:"-"`
+	Tags     []TagInfo          `gorm:"-"`
+	Review   ProductReviewsItem `gorm:"-"`
+}

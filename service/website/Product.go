@@ -24,7 +24,7 @@ func (p *ProductService) CreateProductOne(product website.Produce) (err error) {
 
 // get all product list
 func (p *ProductService) GetAllProductListDB() (list []website.Produce, err error) {
-	err = global.MALL_DB.Find(&list).Error
+	err = global.MALL_DB.Where("status = ?", 1).Find(&list).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return list, nil
@@ -63,6 +63,18 @@ func (p *ProductService) DeleteProduct(id int) error {
 func (p *ProductService) SetMainImageUrl(pid string, url string) (err error) {
 	err = global.MALL_DB.Model(&website.Produce{}).Where("product_id =?", pid).Update("main_img", url).Error
 	return err
+}
+
+// get all product list
+func (p *ProductService) GetAllProductListDBForSearch() (list []website.ProductSearch, err error) {
+	err = global.MALL_DB.Where("status = ?", 1).Order("id desc").Find(&list).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return list, nil
+		}
+		return list, err
+	}
+	return list, nil
 }
 
 // get product lastest list
