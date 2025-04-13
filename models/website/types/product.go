@@ -33,7 +33,7 @@ type AllProduct struct {
 	Category  []CategoryInfo     `gorm:"-"`
 	ImageList []ProductImg       `gorm:"-"`
 	Tags      []TagInfo          `gorm:"-"`
-	Sku       SkuInfo            `gorm:"-"`
+	Sku       []SkuInfo          `gorm:"-"`
 	Detail    []ProductDetail    `gorm:"-"`
 	Review    ProductReviewsItem `gorm:"-"`
 }

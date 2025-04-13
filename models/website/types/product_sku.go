@@ -4,12 +4,8 @@ import "leiserv/global"
 
 type SkuInfo struct {
 	SkuItem
-	List []Tag `gorm:"-"`
+	List []SkuItem `gorm:"-"`
 	global.DATE_MODEL
-}
-
-func (SkuItem) TableName() string {
-	return "product_sku"
 }
 
 type SkuItem struct {
@@ -22,4 +18,8 @@ type SkuItem struct {
 	PriceOff  float64 `json:"priceOff" gorm:"comment:'折扣'"`
 	MainImg   string  `json:"mainImg" gorm:"comment:'主图'"`
 	global.DATE_MODEL
+}
+
+func (SkuItem) TableName() string {
+	return "product_sku"
 }
