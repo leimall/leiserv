@@ -50,4 +50,9 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup, Private *gin.
 		privateRouter.POST("comment", productCommentAPI.PostCommetByOrderID)
 	}
 
+	// get product SKU product id
+	{
+		productRouter.GET("sku/:id", productAPI.GetProductSkuByID)
+	}
+
 }

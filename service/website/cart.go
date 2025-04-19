@@ -36,7 +36,7 @@ func (s *CartService) GetCartDB(userId string) (cart []website.CartItem, err err
 // UpdateCartDB updates the cart item in the database
 
 func (s *CartService) UpdateCartDB(cart website.CartItem) (err error) {
-	err = global.MALL_DB.Where("unique_id =?", cart.UniqueId).Updates(cart).Error
+	err = global.MALL_DB.Where("id=?", cart.ID).Updates(cart).Error
 	return err
 }
 
