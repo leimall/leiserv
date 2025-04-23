@@ -18,17 +18,7 @@ func (p *OrdersService) GetOrdersListDB(pageinfo webauthReq.PageInfo) (list inte
 	limit := pageinfo.PageSize
 	db := global.MALL_DB.Model(&website.OrdersType{})
 	var orders []website.OrdersType
-	err = db.Count(&total).Offset(offset).Limit(limit).Find(&orders).Error
-	list = orders
-	return list, total, err
-}
-
-func (p *OrdersService) GetOrdersList(pageinfo webauthReq.PageInfo) (list interface{}, total int64, err error) {
-	offset := (pageinfo.Page - 1) * pageinfo.PageSize
-	limit := pageinfo.PageSize
-	db := global.MALL_DB.Model(&website.OrdersType{})
-	var orders []website.OrdersType
-	err = db.Count(&total).Offset(offset).Limit(limit).Find(&orders).Error
+	err = db.Count(&total).Offset(offset).Where("payment_method IS NOT NULL AND payment_method != ''").Limit(limit).Find(&orders).Error
 	list = orders
 	return list, total, err
 }
@@ -49,11 +39,11 @@ func (p *OrdersService) UpdateOrderStatusDB(orderDetail webauthReq.UpdateOrderSt
 func (p *OrdersService) GetMyOrdersListDB(pageinfo webauthReq.PageInfo, user_id string) (list []website.OrdersType, total int64, err error) {
 	offset := (pageinfo.Page - 1) * pageinfo.PageSize
 	limit := pageinfo.PageSize
-	db := global.MALL_DB.Model(&website.OrdersType{}).Where("user_id =?", user_id)
+	db := global.MALL_DB.Model(&website.OrdersType{}).Where("user_id =?  AND (payment_method IS NOT NULL AND payment_method != '')", user_id).Order("created_at desc")
 	if pageinfo.Keyword != "" {
 		db = db.Where("order_status =?", pageinfo.Keyword)
 	}
-	err = db.Order("updated_at desc").Count(&total).Offset(offset).Limit(limit).Find(&list).Error
+	err = db.Order("created_at desc").Count(&total).Offset(offset).Limit(limit).Find(&list).Error
 
 	return list, total, err
 }
