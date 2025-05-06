@@ -233,6 +233,36 @@ func (p *ProductAPI) GetBestSellerProductList(c *gin.Context) {
 
 // get product main page sale product list
 
+func (p *ProductAPI) GetReadyToGoProductList(c *gin.Context) {
+	num := 0
+	tagsList, err := tagsService.GetTagListByTitleDB(num, "Made in Canada")
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+	}
+	var pids []string
+
+	for _, product := range tagsList {
+		pids = append(pids, product.ProductID)
+	}
+
+	lists, err := productService.GetProductListByCategoryDB(pids, 0)
+	if err != nil {
+		response.FailWithMessage("获取产品列表失败", c)
+		return
+	}
+
+	reviewList, err := productReviewService.GetProductReviewByProductIDDB(pids)
+	if err != nil {
+		response.FailWithMessage("获取产品评论失败", c)
+		return
+	}
+	for i, product := range lists {
+		lists[i].Review = reviewList[product.ProductID]
+	}
+
+	response.OkWithDetailed(lists, "OK", c)
+}
 func (p *ProductAPI) GetSaleProductList(c *gin.Context) {
 	num := 0
 	tagsList, err := tagsService.GetTagListByTitleDB(num, "sale")
