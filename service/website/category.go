@@ -73,10 +73,8 @@ func (s *CategoryService) GetProductListBySearchDB(search webReq.SearchRequest) 
 			values = append(values, "%"+keyword+"%")
 		}
 		query = query.Where(conditions, values...)
-
-		println("=====", query)
 	}
-	err = query.Find(&list).Error
+	err = query.Order("level desc").Find(&list).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return list, nil

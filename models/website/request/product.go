@@ -1,13 +1,5 @@
 package request
 
-// "title": "aabb",
-// "desction": "aaabbbsdfsaf",
-// "seoKeywords": "ssdf",
-// "seoDescription": "fasfsdf",
-// "price": 100,
-// "priceOff": 1,
-// "mainImg": "",
-// "stock": "2000"
 type CreateProductRequest struct {
 	Title          string  `json:"title" form:"title" gorm:"column:title;"`
 	Description    string  `json:"desction" form:"desction" gorm:"column:description;"`
@@ -25,4 +17,10 @@ type SearchRequest struct {
 	Pirce    []float64 `json:"price" form:"price"`
 	Page     int       `json:"page" form:"page"`
 	PageSize int       `json:"pageSize" form:"pageSize"`
+}
+
+type BestRequest struct {
+	Keyword string `json:"keyword" form:"keyword"`
+	Page    int    `json:"page" form:"page"`
+	Size    int    `json:"size" form:"size"`
 }

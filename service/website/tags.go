@@ -3,6 +3,7 @@ package website
 import (
 	"errors"
 	"leiserv/global"
+	webauthReq "leiserv/models/website/request"
 	websitetypes "leiserv/models/website/types"
 
 	"gorm.io/gorm"
@@ -88,11 +89,17 @@ func (t *TagsService) GetTagListForProduct(pIDS []string) (tagMap map[string][]w
 }
 
 // get product category list by title name
-func (t *TagsService) GetTagListByTitleDB(limit int, title string) (list []websitetypes.TagInfo, err error) {
+func (t *TagsService) GetTagListByTitleDB(b webauthReq.BestRequest) (list []websitetypes.TagInfo, err error) {
+	limit := b.Size
+	offset := b.Size * (b.Page - 1)
 	if limit == 0 {
 		limit = 8
 	}
-	err = global.MALL_DB.Where("title LIKE?", "%"+title+"%").Order("updated_at desc").Limit(limit).Find(&list).Error
+
+	if offset < 0 {
+		offset = 0
+	}
+	err = global.MALL_DB.Where("title LIKE?", "%"+b.Keyword+"%").Order("updated_at desc").Limit(limit).Offset(offset).Find(&list).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return list, nil

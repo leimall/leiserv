@@ -34,15 +34,18 @@ func (a *ProductRouter) InitProductRouter(Router *gin.RouterGroup, Private *gin.
 	{
 		productRouter.GET("lists", productAPI.GetAllProductListsForSearch)
 		productRouter.GET("lastest", productAPI.GetLastestProductList)
-		productRouter.GET("sale", productAPI.GetSaleProductList)
-		productRouter.GET("readytogo", productAPI.GetReadyToGoProductList)
-		productRouter.GET("bastseller", productAPI.GetBestSellerProductList)
+		productRouter.GET("best", productAPI.GetBestSellerProductList)
 		productRouter.GET("detail/:id", productAPI.GetProductDetailById)
 	}
 
 	// get product category list
 	{
 		productRouter.GET("category", productAPI.GetProductListByCategory)
+	}
+
+	// get all tag name
+	{
+		productRouter.GET("tags", productAPI.GetAllTagName)
 	}
 
 	// get product comment list
