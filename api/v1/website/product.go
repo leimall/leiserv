@@ -359,13 +359,22 @@ func (p *ProductAPI) GetProductListByCategory(c *gin.Context) {
 		return
 	}
 
+	reviewList, err := productReviewService.GetProductReviewByProductIDDB(pids)
+	if err != nil {
+		response.FailWithMessage("获取产品评论失败", c)
+		return
+	}
+
+	for i, product := range plist {
+		plist[i].Review = reviewList[product.ProductID]
+	}
+
 	total := len(list)
 	response.OkWithDetailed(response.ListsResult{
 		List:  plist,
 		Total: int64(total),
 	}, "OK", c)
 }
-
 func laginatedlimitProdiuctIDS(productIDs []string, offset int, limit int) []string {
 	// 计算切片的起始和结束位置
 	start := offset

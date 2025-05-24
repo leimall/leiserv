@@ -16,6 +16,7 @@ func (a *CategoryRouter) InitCategoryRouter(Router *gin.RouterGroup) {
 		categoryRouter.GET("list", categoryAPI.GetCategoryList)
 		categoryRouter.GET("style", categoryAPI.GetStyleList)
 		categoryRouter.GET("shape", categoryAPI.GetShapeList)
+		categoryRouter.GET("menu", categoryAPI.GetMenuList)
 	}
 
 }

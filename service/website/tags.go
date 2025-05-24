@@ -30,6 +30,16 @@ func (t *TagsService) GetTagByTypeDB(tagID uint) (tag []websitetypes.Tag, err er
 	}
 	return tag, err
 }
+func (t *TagsService) GetTagByTypeForMenuDB(tagID uint) (tag []websitetypes.Tag, err error) {
+	err = global.MALL_DB.Where("type =?", tagID).Order("CAST(value AS UNSIGNED) ASC").Find(&tag).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return tag, nil
+		}
+		return tag, err
+	}
+	return tag, err
+}
 
 func (t *TagsService) GetTagsListDB() (tags []websitetypes.Tag, err error) {
 	err = global.MALL_DB.Order("type desc").Find(&tags).Error
